@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no, viewport-fit=cover">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- ✅ SEO Meta Tags -->
+  <meta name="description" content="Happy Paws Adoption - Find healthy, loving puppies for adoption in Portland, OR. Golden Retrievers, German Shepherds, Poodles and more. Vaccinated & ready for loving homes.">
+  <meta name="keywords" content="puppy adoption, adopt a puppy, dogs for adoption, Portland puppies, Golden Retriever adoption, German Shepherd puppy, Poodle adoption">
+  <meta name="author" content="Happy Paws Adoption Center">
+  <meta name="robots" content="index, follow">
+  
+  <!-- ✅ Open Graph for social sharing -->
+  <meta property="og:title" content="Happy Paws Adoption · Find your perfect puppy">
+  <meta property="og:description" content="Healthy, loving puppies looking for their forever homes. Vaccinated, microchipped, and ready to meet you!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://happypawsadoption.com">
+  <meta property="og:image" content="https://placehold.co/1200x630/fadcc5/5e3e1c?text=Happy+Paws+Puppies">
+  <meta property="og:locale" content="en_US">
+  
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Happy Paws Adoption · Find your puppy">
+  <meta name="twitter:description" content="Adopt healthy, vaccinated puppies. Golden Retrievers, German Shepherds & more!">
+  
+  <!-- ✅ Structured Data for puppies (Schema.org) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AnimalShelter",
+      "name": "Happy Paws Adoption Center",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Portland",
+        "addressRegion": "OR",
+        "addressCountry": "US"
+      },
+      "telephone": "+0508437839",
+      "description": "We help loving puppies find forever homes. All puppies are vaccinated, microchipped, and health-certified."
+    }
+  </script>
+
+  <title>Happy Paws Adoption · Find your puppy 🐾</title>
+</head>
+<body>
+
+<div class="app">
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo" onclick="document.querySelector('[data-page=home]').click()" title="Go to homepage" role="button" tabindex="0" aria-label="Happy Paws Home">
+      <span>🐾</span> Happy Paws
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-page="home" aria-current="page">🏠 Home</button>
+      <button class="nav-btn" data-page="puppies">🐶 Available Puppies</button>
+      <button class="nav-btn" data-page="faq">❓ FAQ</button>
+      <button class="nav-btn" data-page="testimonials">💚 Happy Tails</button>
+      <button class="nav-btn" data-page="contact">📞 Contact</button>
+    </div>
+  </nav>
+
+  <!-- ---------- HOMEPAGE ---------- -->
+  <div id="homePage" class="page active-page">
+    <div class="hero">
+      <div class="hero-image">
+        <!-- ✅ CHANGE IMAGE: Replace src with your own puppy hero image -->
+        <img src="https://placehold.co/500x500/fadcc5/5e3e1c?text=Happy+Adoptable+Puppy" 
+             alt="Cute adoptable puppy waiting for a home" 
+             class="big-puppy" 
+             style="width:100%; max-width:400px;"
+             loading="eager"
+             onerror="this.src='https://placehold.co/400x400/fadcc5/5e3e1c?text=Puppy'; this.classList.add('error-fallback')">
+      </div>
+      <div class="hero-text">
+        <h1>Healthy, loving puppies</h1>
+        <p class="message">"Looking for a new home — wagging tails included."</p>
+        <button class="cta-button" id="viewPuppiesBtn">🐾 View Available Puppies</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- AVAILABLE PUPPIES PAGE ---------- -->
+  <div id="puppiesPage" class="page">
+    <h2 class="gallery-title">🐕 Meet our puppies</h2>
+    
+    <!-- ✅ FILTER BAR -->
+    <div class="filter-bar" id="filterBar">
+      <select id="filterBreed" aria-label="Filter by breed">
+        <option value="">🐶 All Breeds</option>
+        <option value="Golden Retriever">Golden Retriever</option>
+        <option value="German Shepherd">German Shepherd</option>
+        <option value="Poodle">Poodle</option>
+      </select>
+      <select id="filterGender" aria-label="Filter by gender">
+        <option value="">⚥ All Genders</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+      </select>
+      <select id="filterAge" aria-label="Filter by age">
+        <option value="">📅 All Ages</option>
+        <option value="2">Under 3 months</option>
+        <option value="3">3-4 months</option>
+        <option value="4">4+ months</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="🔍 Search by name..." aria-label="Search puppies by name">
+      <button class="filter-reset" id="filterReset">🔄 Reset</button>
+    </div>
+    
+    <div class="puppy-grid" id="puppyGrid"></div>
+  </div>
+
+  <!-- ---------- PUPPY DETAIL PAGE ---------- -->
+  <div id="detailPage" class="page">
+    <div id="detailContent" class="detail-container"></div>
+    <button class="nav-btn" id="backToPuppiesBtn" style="margin-top:1.5rem;">⬅ Back to all puppies</button>
+  </div>
+
+  <!-- ---------- FAQ PAGE ---------- -->
+  <div id="faqPage" class="page">
+    <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">❓ Adoption FAQ</h2>
+    <div class="faq-section">
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          🐾 What is the adoption process? <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>First, browse our available puppies and find one that matches your lifestyle. Then contact us via phone or WhatsApp to schedule a meet-and-greet. We'll discuss the puppy's needs, your home environment, and complete a simple adoption application. Once approved, you pay the adoption fee and take your new family member home!</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          💉 Are the puppies vaccinated? <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>Absolutely! All our puppies are fully age-appropriately vaccinated, dewormed, and microchipped. Each puppy comes with a health certificate from our licensed veterinarian. We also provide a vaccination record card.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          🏠 Is there a home check required? <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>We do a friendly, informal home check — usually a brief video call or photos of your living space. We just want to ensure the puppy will have a safe, loving environment. It's quick and stress-free!</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          💰 What does the adoption fee include? <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>The adoption fee covers vaccinations, microchipping, deworming, health certificate, and a starter kit (food sample, blanket, toy, and care guide). It also supports our rescue efforts for other puppies in need.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          🚗 Can you deliver the puppy? <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>We prefer in-person pickups so you can meet the puppy first. However, for adopters within 100 miles of Portland, we may offer delivery for a small transport fee. Contact us to discuss!</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          🔄 What if it doesn't work out? <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <p>We have a 30-day return policy. If for any reason the adoption isn't a good fit, you can return the puppy to us — no judgment. Your adoption fee (minus a small rehoming processing cost) will be refunded.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- TESTIMONIALS PAGE ---------- -->
+  <div id="testimonialsPage" class="page">
+    <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">💚 Happy Adoption Stories</h2>
+    <p style="margin-bottom:1rem; color:#6b4f34;">Real families who found their perfect match through Happy Paws.</p>
+    <div class="testimonial-carousel" id="testimonialCarousel">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"We adopted <span class="adopted-pup">Bella</span> 2 months ago and she's the sweetest Golden Retriever! The team was so helpful with the transition."</p>
+        <p><strong>— Sarah & Mike, Portland</strong></p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"<span class="adopted-pup">Max</span> (our German Shepherd) is incredibly smart and already protective of our kids. Best decision ever!"</p>
+        <p><strong>— The Johnson Family, Beaverton</strong></p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Our little <span class="adopted-pup">Luna</span> the Poodle is hypoallergenic and perfect for our apartment. Happy Paws made the process so easy."</p>
+        <p><strong>— Emily, downtown Portland</strong></p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p>"Adopted <span class="adopted-pup">Buddy</span> last spring. He came fully vaccinated and with a sweet starter pack. Thank you Happy Paws!"</p>
+        <p><strong>— Carlos & Diego, Hillsboro</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- CONTACT PAGE ---------- -->
+  <div id="contactPage" class="page">
+    <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">📞 Contact Us</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:2rem;">
+      <div style="flex:1; background: #fff5e9; padding: 1.5rem; border-radius: 2rem;">
+        <p><strong>📍 City:</strong> Buea, OR (Happy Paws Center)</p>
+        <p><strong>📱 Phone:</strong> <a href="tel:+2330508437839" style="color:#b45f3a; min-height:44px; display:inline-block;">(233) 0508437839</a></p>
+        <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
+        <div style="margin-top:1.5rem; background: #fce4d6; padding:1rem; border-radius:1.5rem;">
+          <p><em>⏰ We answer within minutes! 9am–7pm daily.</em></p>
+        </div>
+      </div>
+      <div style="flex:1; background: #faf5ef; padding:1.5rem; border-radius:2rem;">
+        <!-- ✅ FORM WITH REAL BACKEND (Formspree) -->
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+          <input type="text" name="name" placeholder="Your name" required aria-label="Your name">
+          <input type="email" name="email" placeholder="Your email" required aria-label="Your email">
+          <input type="tel" name="phone" placeholder="Your phone (optional)" aria-label="Your phone number">
+          <textarea name="message" rows="3" placeholder="Which puppy are you interested in? Any questions?" required aria-label="Your message"></textarea>
+          <button type="submit" class="cta-button" style="width:fit-content;">Send message ✉️</button>
+        </form>
+        <div class="form-status" id="formStatus"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Floating WhatsApp/Call button for mobile -->
+<a href="https://wa.me/2330508437839" target="_blank" rel="noopener" class="floating-call" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">
+  💬
+</a>
+
+<!-- ✅ Video Modal -->
+<div class="video-modal-overlay" id="videoModal">
+  <div class="video-modal">
+    <button class="close-modal" id="closeVideoModal" aria-label="Close video">✕</button>
+    <video id="puppyVideo" controls playsinline>
+      <source src="" type="video/mp4">
+      Your browser does not support the video.
+    </video>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
