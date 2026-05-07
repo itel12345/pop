@@ -3,244 +3,1280 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no, viewport-fit=cover">
-  <link rel="stylesheet" href="style.css">
-  
-  <!-- ✅ SEO Meta Tags -->
-  <meta name="description" content="Happy Paws Adoption - Find healthy, loving puppies for adoption in Portland, OR. Golden Retrievers, German Shepherds, Poodles and more. Vaccinated & ready for loving homes.">
-  <meta name="keywords" content="puppy adoption, adopt a puppy, dogs for adoption, Portland puppies, Golden Retriever adoption, German Shepherd puppy, Poodle adoption">
+
+  <meta name="description" content="Happy Paws Adoption - Find healthy, loving puppies for adoption. Golden Retrievers, German Shepherds, Poodles and more. Vaccinated & ready for loving homes.">
+  <meta name="keywords" content="puppy adoption, adopt a puppy, dogs for adoption, puppies for sale, Golden Retriever, German Shepherd, Poodle">
   <meta name="author" content="Happy Paws Adoption Center">
   <meta name="robots" content="index, follow">
-  
-  <!-- ✅ Open Graph for social sharing -->
+
   <meta property="og:title" content="Happy Paws Adoption · Find your perfect puppy">
   <meta property="og:description" content="Healthy, loving puppies looking for their forever homes. Vaccinated, microchipped, and ready to meet you!">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://happypawsadoption.com">
   <meta property="og:image" content="https://placehold.co/1200x630/fadcc5/5e3e1c?text=Happy+Paws+Puppies">
   <meta property="og:locale" content="en_US">
-  
-  <!-- ✅ Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Happy Paws Adoption · Find your puppy">
-  <meta name="twitter:description" content="Adopt healthy, vaccinated puppies. Golden Retrievers, German Shepherds & more!">
-  
-  <!-- ✅ Structured Data for puppies (Schema.org) -->
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "AnimalShelter",
       "name": "Happy Paws Adoption Center",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Portland",
-        "addressRegion": "OR",
-        "addressCountry": "US"
-      },
-      "telephone": "+0508437839",
+      "telephone": "+233050843738",
       "description": "We help loving puppies find forever homes. All puppies are vaccinated, microchipped, and health-certified."
     }
   </script>
 
   <title>Happy Paws Adoption · Find your puppy 🐾</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --paw-pink: #f9d5d3;
+      --soft-cream: #fef9e7;
+      --deep-brown: #5e3e1c;
+      --warm-amber: #f3b33d;
+      --coral-blush: #ff8c75;
+      --honey-gold: #f7b05e;
+      --mint-fresh: #a7d0c0;
+      --card-shadow: 0 20px 30px -15px rgba(0,0,0,0.08), 0 8px 15px rgba(0,0,0,0.03);
+      --white-pure: #ffffff;
+      --text-soft: #4a3724;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fef7e0 0%, #fff4e6 40%, #fde9f0 100%);
+      color: var(--text-soft);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 1rem 2rem;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* ---- LOADING SCREEN ---- */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff8f0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-paw {
+      font-size: 5rem;
+      animation: pawBounce 0.6s infinite alternate;
+    }
+
+    .loader-text {
+      margin-top: 1rem;
+      font-weight: 700;
+      color: #b45f3a;
+      font-size: 1.3rem;
+    }
+
+    @keyframes pawBounce {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-20px) scale(1.1); }
+    }
+
+    .app {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background: rgba(255,255,250,0.65);
+      backdrop-filter: blur(14px);
+      border-radius: 3.5rem 3.5rem 3rem 3rem;
+      padding: 1.8rem 1.2rem 2.5rem;
+      box-shadow: 0 25px 45px rgba(94, 62, 28, 0.1);
+      margin-top: 0.5rem;
+      border: 1px solid rgba(255,255,240,0.7);
+    }
+
+    /* ---- SMART NAVBAR (hides on scroll down, shows on scroll up) ---- */
+    .navbar-wrapper {
+      position: sticky;
+      top: 0.5rem;
+      z-index: 100;
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    }
+
+    .navbar-wrapper.nav-hidden {
+      transform: translateY(-130%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 80px;
+      padding: 0.7rem 1.5rem;
+      box-shadow: 0 10px 35px rgba(94, 62, 28, 0.1);
+      gap: 0.8rem;
+      border: 1px solid rgba(255,255,255,0.8);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar.scrolled {
+      padding: 0.35rem 1.2rem;
+      border-radius: 50px;
+      box-shadow: 0 5px 20px rgba(94, 62, 28, 0.12);
+      background: rgba(255, 255, 255, 0.97);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #d68b5c, #b45f3a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      white-space: nowrap;
+    }
+    .logo span {
+      font-size: 1.8rem;
+      background: none;
+      -webkit-text-fill-color: #c97c4d;
+      transition: all 0.35s ease;
+    }
+    .navbar.scrolled .logo {
+      font-size: 1.25rem;
+    }
+    .navbar.scrolled .logo span {
+      font-size: 1.4rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      padding: 0.55rem 1rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: #5a4a39;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: #faf5ef;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      white-space: nowrap;
+      min-height: 40px;
+    }
+
+    .navbar.scrolled .nav-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      min-height: 36px;
+    }
+
+    .nav-btn:hover {
+      background: #fce4d6;
+      color: #4b2e1a;
+      box-shadow: 0 6px 14px rgba(233, 166, 128, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background: var(--coral-blush);
+      color: white;
+      font-weight: 700;
+    }
+
+    /* ---- PAGES ---- */
+    .page {
+      display: none;
+      width: 100%;
+      animation: fadeSlide 0.45s ease;
+    }
+
+    .page.active-page {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      background: linear-gradient(105deg, #fff5e9, #fce4d6);
+      border-radius: 3.5rem;
+      padding: 2rem 1.8rem;
+      gap: 2rem;
+      box-shadow: inset 0 2px 10px rgba(255,255,255,0.9), var(--card-shadow);
+    }
+
+    .hero-image {
+      flex: 1 1 280px;
+      text-align: center;
+    }
+
+    .hero-image .big-puppy {
+      max-width: 100%;
+      height: auto;
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 35px rgba(184, 115, 51, 0.25);
+      transition: all 0.3s;
+    }
+
+    .big-puppy:hover {
+      transform: scale(1.02);
+    }
+
+    .hero-text {
+      flex: 1 1 300px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.5rem, 7vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(to right, #b45f3a, #7a4a2a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .message {
+      font-size: 1.25rem;
+      margin: 1.2rem 0 1.8rem;
+      color: #6b4f34;
+      font-weight: 500;
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, #f7b05e, #e28743);
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 1rem 2.2rem;
+      border-radius: 3rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 12px 22px -8px #d18040;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 50px;
+      text-decoration: none;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 16px 25px -10px #c96e2c;
+    }
+
+    /* ---- FILTER BAR ---- */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      background: #fffbf5;
+      padding: 1rem 1.5rem;
+      border-radius: 3rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      margin-bottom: 0.5rem;
+    }
+
+    .filter-bar select,
+    .filter-bar input {
+      padding: 0.7rem 1.2rem;
+      border-radius: 2.5rem;
+      border: 1px solid #e7cfb5;
+      background: white;
+      font-size: 0.95rem;
+      font-family: inherit;
+      min-width: 140px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .filter-bar select:focus,
+    .filter-bar input:focus {
+      outline: none;
+      border-color: #f7b05e;
+      box-shadow: 0 0 0 3px rgba(247,176,94,0.15);
+    }
+
+    .filter-reset {
+      background: #f0e0ce;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 2.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      min-height: 44px;
+    }
+
+    .filter-reset:hover {
+      background: #e2ccb0;
+    }
+
+    /* ---- GALLERY ---- */
+    .gallery-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 1rem 0;
+      color: #4b3822;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,240,0.7);
+      padding: 0.5rem 1.5rem;
+      border-radius: 3rem;
+      width: fit-content;
+    }
+
+    .puppy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.3rem;
+      color: #8b6f5a;
+    }
+
+    .puppy-card {
+      background: white;
+      border-radius: 2.2rem;
+      padding: 1.4rem;
+      box-shadow: var(--card-shadow);
+      transition: 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      background: #fffbf5;
+      border: 1px solid #fae3cd;
+      position: relative;
+    }
+
+    .puppy-card::after {
+      content: "🐾";
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      font-size: 1.8rem;
+      opacity: 0.4;
+    }
+
+    .puppy-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 35px -16px #d49b6a;
+      background: white;
+    }
+
+    .puppy-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 1.8rem;
+      background: #fadcc5;
+      margin-bottom: 0.8rem;
+      border: 2px solid #ffe0c0;
+    }
+
+    .puppy-card img.error-fallback {
+      object-fit: contain;
+      background: #fef0e0;
+    }
+
+    .puppy-info h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #4b2e1a;
+    }
+
+    .badge {
+      background: var(--mint-fresh);
+      color: #2d4a3a;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 0.3rem 0;
+    }
+
+    /* ---- DETAIL PAGE ---- */
+    .detail-container {
+      background: #fffaf4;
+      border-radius: 3rem;
+      padding: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background: linear-gradient(135deg, #fff9f0, #fff5e6);
+    }
+
+    .detail-photo {
+      flex: 1 1 280px;
+      border-radius: 2.5rem;
+      background: #fbe7d4;
+      max-height: 400px;
+      object-fit: cover;
+      box-shadow: 0 18px 25px rgba(0,0,0,0.1);
+      border: 3px solid white;
+    }
+
+    .detail-content {
+      flex: 1 1 300px;
+    }
+
+    .whatsapp-btn {
+      background: #25D366;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 3rem;
+      color: white;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 18px rgba(37, 211, 102, 0.3);
+      text-decoration: none;
+      min-height: 50px;
+    }
+
+    .whatsapp-btn:hover {
+      background: #1da851;
+      transform: scale(1.02);
+    }
+
+    /* ---- FAQ ---- */
+    .faq-section {
+      background: #fffbf5;
+      border-radius: 2.5rem;
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #e8d5c0;
+      padding: 1rem 0;
+    }
+
+    .faq-question {
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      transition: 0.2s;
+      min-height: 44px;
+    }
+
+    .faq-question:hover {
+      color: #b45f3a;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      color: #5e4a35;
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding: 0.5rem 0 1rem;
+    }
+
+    .faq-arrow {
+      transition: transform 0.3s;
+      font-size: 1.3rem;
+    }
+
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* ---- TESTIMONIALS ---- */
+    .testimonial-carousel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding: 1rem 0.5rem 2rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #d4b896 transparent;
+    }
+
+    .testimonial-carousel::-webkit-scrollbar {
+      height: 6px;
+    }
+    .testimonial-carousel::-webkit-scrollbar-thumb {
+      background: #d4b896;
+      border-radius: 10px;
+    }
+
+    .testimonial-card {
+      min-width: 280px;
+      max-width: 350px;
+      background: white;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      scroll-snap-align: start;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+
+    .testimonial-card .stars {
+      color: #f7b05e;
+      font-size: 1.2rem;
+    }
+
+    .testimonial-card .adopted-pup {
+      font-weight: 700;
+      color: #b45f3a;
+    }
+
+    /* ---- FLOATING BUTTONS ---- */
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      background: #25D366;
+      color: white;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      box-shadow: 0 8px 25px rgba(37,211,102,0.4);
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      border: 3px solid white;
+    }
+
+    .floating-whatsapp:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 30px rgba(37,211,102,0.55);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 200;
+      background: #b45f3a;
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 8px 20px rgba(180,95,58,0.35);
+      cursor: pointer;
+      border: 2px solid white;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      transform: translateY(20px);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #8b4513;
+      transform: translateY(-3px);
+    }
+
+    /* ---- FORM ---- */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+      margin-top: 1.5rem;
+    }
+
+    input,
+    textarea {
+      padding: 1rem 1.3rem;
+      border-radius: 2rem;
+      border: 1px solid #e7cfb5;
+      background: #fffdf9;
+      font-size: 1rem;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #f7b05e;
+      box-shadow: 0 0 0 3px rgba(247,176,94,0.2);
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .form-status {
+      padding: 0.8rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      display: none;
+      margin-top: 0.5rem;
+    }
+
+    .form-status.success {
+      display: block;
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .form-status.error {
+      display: block;
+      background: #fce4e4;
+      color: #721c24;
+    }
+
+    #backToPuppiesBtn {
+      background: #f0e0ce;
+      font-weight: 600;
+      min-height: 44px;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 3rem;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 2.5rem;
+        gap: 0.5rem;
+      }
+      .nav-links {
+        justify-content: center;
+      }
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        border-radius: 2.5rem;
+      }
+      .puppy-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 2rem;
+      }
+      .filter-bar select,
+      .filter-bar input {
+        min-width: auto;
+      }
+      .detail-container {
+        flex-direction: column;
+      }
+      .floating-whatsapp {
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
+        bottom: 1rem;
+        right: 1rem;
+      }
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        bottom: 1rem;
+        left: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .puppy-grid {
+        grid-template-columns: 1fr;
+      }
+      .app {
+        padding: 1rem 0.6rem 1.5rem;
+        border-radius: 2.5rem;
+      }
+      .testimonial-card {
+        min-width: 240px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="app">
-  <!-- Navigation -->
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <div class="logo" onclick="document.querySelector('[data-page=home]').click()" title="Go to homepage" role="button" tabindex="0" aria-label="Happy Paws Home">
-      <span>🐾</span> Happy Paws
-    </div>
-    <div class="nav-links">
-      <button class="nav-btn active" data-page="home" aria-current="page">🏠 Home</button>
-      <button class="nav-btn" data-page="puppies">🐶 Available Puppies</button>
-      <button class="nav-btn" data-page="faq">❓ FAQ</button>
-      <button class="nav-btn" data-page="testimonials">💚 Happy Tails</button>
-      <button class="nav-btn" data-page="contact">📞 Contact</button>
-    </div>
-  </nav>
-
-  <!-- ---------- HOMEPAGE ---------- -->
-  <div id="homePage" class="page active-page">
-    <div class="hero">
-      <div class="hero-image">
-        <!-- ✅ CHANGE IMAGE: Replace src with your own puppy hero image -->
-        <img src="https://placehold.co/500x500/fadcc5/5e3e1c?text=Happy+Adoptable+Puppy" 
-             alt="Cute adoptable puppy waiting for a home" 
-             class="big-puppy" 
-             style="width:100%; max-width:400px;"
-             loading="eager"
-             onerror="this.src='https://placehold.co/400x400/fadcc5/5e3e1c?text=Puppy'; this.classList.add('error-fallback')">
-      </div>
-      <div class="hero-text">
-        <h1>Healthy, loving puppies</h1>
-        <p class="message">"Looking for a new home — wagging tails included."</p>
-        <button class="cta-button" id="viewPuppiesBtn">🐾 View Available Puppies</button>
-      </div>
-    </div>
+  <!-- ---- LOADING SCREEN ---- -->
+  <div class="loader-overlay" id="loader">
+    <div class="loader-paw">🐾</div>
+    <div class="loader-text">Finding your perfect puppy...</div>
   </div>
 
-  <!-- ---------- AVAILABLE PUPPIES PAGE ---------- -->
-  <div id="puppiesPage" class="page">
-    <h2 class="gallery-title">🐕 Meet our puppies</h2>
-    
-    <!-- ✅ FILTER BAR -->
-    <div class="filter-bar" id="filterBar">
-      <select id="filterBreed" aria-label="Filter by breed">
-        <option value="">🐶 All Breeds</option>
-        <option value="Golden Retriever">Golden Retriever</option>
-        <option value="German Shepherd">German Shepherd</option>
-        <option value="Poodle">Poodle</option>
-      </select>
-      <select id="filterGender" aria-label="Filter by gender">
-        <option value="">⚥ All Genders</option>
-        <option value="Female">Female</option>
-        <option value="Male">Male</option>
-      </select>
-      <select id="filterAge" aria-label="Filter by age">
-        <option value="">📅 All Ages</option>
-        <option value="2">Under 3 months</option>
-        <option value="3">3-4 months</option>
-        <option value="4">4+ months</option>
-      </select>
-      <input type="text" id="filterSearch" placeholder="🔍 Search by name..." aria-label="Search puppies by name">
-      <button class="filter-reset" id="filterReset">🔄 Reset</button>
-    </div>
-    
-    <div class="puppy-grid" id="puppyGrid"></div>
+  <!-- ---- NAVBAR WRAPPER ---- -->
+  <div class="navbar-wrapper" id="navbarWrapper">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+      <div class="logo" onclick="document.querySelector('[data-page=home]').click()" title="Go to homepage" role="button" tabindex="0" aria-label="Happy Paws Home">
+        <span>🐾</span> Happy Paws
+      </div>
+      <div class="nav-links">
+        <button class="nav-btn active" data-page="home" aria-current="page">🏠 Home</button>
+        <button class="nav-btn" data-page="puppies">🐶 Puppies</button>
+        <button class="nav-btn" data-page="faq">❓ FAQ</button>
+        <button class="nav-btn" data-page="testimonials">💚 Stories</button>
+        <button class="nav-btn" data-page="contact">📞 Contact</button>
+      </div>
+    </nav>
   </div>
 
-  <!-- ---------- PUPPY DETAIL PAGE ---------- -->
-  <div id="detailPage" class="page">
-    <div id="detailContent" class="detail-container"></div>
-    <button class="nav-btn" id="backToPuppiesBtn" style="margin-top:1.5rem;">⬅ Back to all puppies</button>
-  </div>
+  <div class="app">
 
-  <!-- ---------- FAQ PAGE ---------- -->
-  <div id="faqPage" class="page">
-    <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">❓ Adoption FAQ</h2>
-    <div class="faq-section">
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-          🐾 What is the adoption process? <span class="faq-arrow">▼</span>
+    <!-- ---- HOMEPAGE ---- -->
+    <div id="homePage" class="page active-page">
+      <div class="hero">
+        <div class="hero-image">
+          <img src="https://placehold.co/500x500/fadcc5/5e3e1c?text=Happy+Adoptable+Puppy"
+          alt="Cute adoptable puppy waiting for a home"
+          class="big-puppy"
+          style="width:100%; max-width:400px;"
+          loading="eager"
+          onerror="this.src='https://placehold.co/400x400/fadcc5/5e3e1c?text=Puppy'; this.classList.add('error-fallback')">
         </div>
-        <div class="faq-answer">
-          <p>First, browse our available puppies and find one that matches your lifestyle. Then contact us via phone or WhatsApp to schedule a meet-and-greet. We'll discuss the puppy's needs, your home environment, and complete a simple adoption application. Once approved, you pay the adoption fee and take your new family member home!</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-          💉 Are the puppies vaccinated? <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          <p>Absolutely! All our puppies are fully age-appropriately vaccinated, dewormed, and microchipped. Each puppy comes with a health certificate from our licensed veterinarian. We also provide a vaccination record card.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-          🏠 Is there a home check required? <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          <p>We do a friendly, informal home check — usually a brief video call or photos of your living space. We just want to ensure the puppy will have a safe, loving environment. It's quick and stress-free!</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-          💰 What does the adoption fee include? <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          <p>The adoption fee covers vaccinations, microchipping, deworming, health certificate, and a starter kit (food sample, blanket, toy, and care guide). It also supports our rescue efforts for other puppies in need.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-          🚗 Can you deliver the puppy? <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          <p>We prefer in-person pickups so you can meet the puppy first. However, for adopters within 100 miles of Portland, we may offer delivery for a small transport fee. Contact us to discuss!</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-          🔄 What if it doesn't work out? <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          <p>We have a 30-day return policy. If for any reason the adoption isn't a good fit, you can return the puppy to us — no judgment. Your adoption fee (minus a small rehoming processing cost) will be refunded.</p>
+        <div class="hero-text">
+          <h1>Healthy, loving puppies</h1>
+          <p class="message">"Looking for a new home — wagging tails included."</p>
+          <button class="cta-button" id="viewPuppiesBtn">🐾 View Available Puppies</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- ---------- TESTIMONIALS PAGE ---------- -->
-  <div id="testimonialsPage" class="page">
-    <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">💚 Happy Adoption Stories</h2>
-    <p style="margin-bottom:1rem; color:#6b4f34;">Real families who found their perfect match through Happy Paws.</p>
-    <div class="testimonial-carousel" id="testimonialCarousel">
-      <div class="testimonial-card">
-        <div class="stars">⭐⭐⭐⭐⭐</div>
-        <p>"We adopted <span class="adopted-pup">Bella</span> 2 months ago and she's the sweetest Golden Retriever! The team was so helpful with the transition."</p>
-        <p><strong>— Sarah & Mike, Portland</strong></p>
+    <!-- ---- PUPPIES PAGE ---- -->
+    <div id="puppiesPage" class="page">
+      <h2 class="gallery-title">🐕 Meet our puppies</h2>
+      <div class="filter-bar" id="filterBar">
+        <select id="filterBreed" aria-label="Filter by breed">
+          <option value="">🐶 All Breeds</option>
+          <option value="Golden Retriever">Golden Retriever</option>
+          <option value="German Shepherd">German Shepherd</option>
+          <option value="Poodle">Poodle</option>
+        </select>
+        <select id="filterGender" aria-label="Filter by gender">
+          <option value="">⚥ All Genders</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+        <select id="filterAge" aria-label="Filter by age">
+          <option value="">📅 All Ages</option>
+          <option value="2">Under 3 months</option>
+          <option value="3">3-4 months</option>
+          <option value="4">4+ months</option>
+        </select>
+        <input type="text" id="filterSearch" placeholder="🔍 Search by name..." aria-label="Search puppies by name">
+        <button class="filter-reset" id="filterReset">🔄 Reset</button>
       </div>
-      <div class="testimonial-card">
-        <div class="stars">⭐⭐⭐⭐⭐</div>
-        <p>"<span class="adopted-pup">Max</span> (our German Shepherd) is incredibly smart and already protective of our kids. Best decision ever!"</p>
-        <p><strong>— The Johnson Family, Beaverton</strong></p>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars">⭐⭐⭐⭐⭐</div>
-        <p>"Our little <span class="adopted-pup">Luna</span> the Poodle is hypoallergenic and perfect for our apartment. Happy Paws made the process so easy."</p>
-        <p><strong>— Emily, downtown Portland</strong></p>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars">⭐⭐⭐⭐⭐</div>
-        <p>"Adopted <span class="adopted-pup">Buddy</span> last spring. He came fully vaccinated and with a sweet starter pack. Thank you Happy Paws!"</p>
-        <p><strong>— Carlos & Diego, Hillsboro</strong></p>
-      </div>
+      <div class="puppy-grid" id="puppyGrid"></div>
     </div>
-  </div>
 
-  <!-- ---------- CONTACT PAGE ---------- -->
-  <div id="contactPage" class="page">
-    <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">📞 Contact Us</h2>
-    <div style="display:flex; flex-wrap:wrap; gap:2rem;">
-      <div style="flex:1; background: #fff5e9; padding: 1.5rem; border-radius: 2rem;">
-        <p><strong>📍 City:</strong> Buea, OR (Happy Paws Center)</p>
-        <p><strong>📱 Phone:</strong> <a href="tel:+2330508437839" style="color:#b45f3a; min-height:44px; display:inline-block;">(233) 0508437839</a></p>
-        <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
-        <div style="margin-top:1.5rem; background: #fce4d6; padding:1rem; border-radius:1.5rem;">
-          <p><em>⏰ We answer within minutes! 9am–7pm daily.</em></p>
+    <!-- ---- DETAIL PAGE ---- -->
+    <div id="detailPage" class="page">
+      <div id="detailContent" class="detail-container"></div>
+      <button class="nav-btn" id="backToPuppiesBtn" style="margin-top:1.5rem;">⬅ Back to all puppies</button>
+    </div>
+
+    <!-- ---- FAQ PAGE ---- -->
+    <div id="faqPage" class="page">
+      <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">❓ Adoption FAQ</h2>
+      <div class="faq-section">
+        <div class="faq-item">
+          <div class="faq-question" tabindex="0" role="button" aria-expanded="false">🐾 What is the adoption process? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer"><p>Browse our puppies, find your match, then contact us via phone or WhatsApp. We'll schedule a meet-and-greet, discuss the puppy's needs, and complete a simple adoption application. Once approved, pay the fee and take your new family member home!</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" tabindex="0" role="button" aria-expanded="false">💉 Are the puppies vaccinated? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer"><p>Absolutely! All puppies are fully age-appropriately vaccinated, dewormed, and microchipped. Each comes with a health certificate and vaccination record card.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" tabindex="0" role="button" aria-expanded="false">🏠 Is there a home check? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer"><p>We do a friendly, informal home check — usually a brief video call or photos of your space. Quick and stress-free!</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" tabindex="0" role="button" aria-expanded="false">💰 What does the fee include? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer"><p>The fee covers vaccinations, microchipping, deworming, health certificate, and a starter kit (food sample, blanket, toy, care guide).</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" tabindex="0" role="button" aria-expanded="false">🔄 What if it doesn't work out? <span class="faq-arrow">▼</span></div>
+          <div class="faq-answer"><p>30-day return policy. If the adoption isn't a good fit, return the puppy — no judgment. Fee refunded minus a small processing cost.</p></div>
         </div>
       </div>
-      <div style="flex:1; background: #faf5ef; padding:1.5rem; border-radius:2rem;">
-        <!-- ✅ FORM WITH REAL BACKEND (Formspree) -->
-        <form class="contact-form" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
-          <input type="text" name="name" placeholder="Your name" required aria-label="Your name">
-          <input type="email" name="email" placeholder="Your email" required aria-label="Your email">
-          <input type="tel" name="phone" placeholder="Your phone (optional)" aria-label="Your phone number">
-          <textarea name="message" rows="3" placeholder="Which puppy are you interested in? Any questions?" required aria-label="Your message"></textarea>
-          <button type="submit" class="cta-button" style="width:fit-content;">Send message ✉️</button>
-        </form>
-        <div class="form-status" id="formStatus"></div>
+    </div>
+
+    <!-- ---- TESTIMONIALS ---- -->
+    <div id="testimonialsPage" class="page">
+      <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">💚 Happy Adoption Stories</h2>
+      <div class="testimonial-carousel">
+        <div class="testimonial-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"We adopted <span class="adopted-pup">Bella</span> — sweetest Golden Retriever! The team was so helpful."</p><p><strong>— Sarah & Mike</strong></p></div>
+        <div class="testimonial-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"<span class="adopted-pup">Max</span> is incredibly smart and protective. Best decision ever!"</p><p><strong>— The Johnson Family</strong></p></div>
+        <div class="testimonial-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"<span class="adopted-pup">Luna</span> the Poodle is perfect for our apartment. Process was so easy."</p><p><strong>— Emily</strong></p></div>
+        <div class="testimonial-card"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Adopted <span class="adopted-pup">Buddy</span> — fully vaccinated with a sweet starter pack!"</p><p><strong>— Carlos & Diego</strong></p></div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ✅ Floating WhatsApp/Call button for mobile -->
-<a href="https://wa.me/2330508437839" target="_blank" rel="noopener" class="floating-call" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">
-  💬
-</a>
+    <!-- ---- CONTACT PAGE ---- -->
+    <div id="contactPage" class="page">
+      <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">📞 Contact Us</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:2rem;">
+        <div style="flex:1; background: #fff5e9; padding: 1.5rem; border-radius: 2rem;">
+          <p><strong>📍 City:</strong> Accra, Ghana</p>
+          <p><strong>📱 Phone:</strong> <a href="tel:+233050843738" style="color:#b45f3a; min-height:44px; display:inline-block;">+233 50 843 738</a></p>
+          <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/233050843738" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
+          <div style="margin-top:1.5rem; background: #fce4d6; padding:1rem; border-radius:1.5rem;">
+            <p><em>⏰ We answer within minutes!</em></p>
+          </div>
+        </div>
+        <div style="flex:1; background: #faf5ef; padding:1.5rem; border-radius:2rem;">
+          <form class="contact-form" id="contactForm">
+            <input type="text" name="name" placeholder="Your name" required aria-label="Your name">
+            <input type="tel" name="phone" placeholder="Your phone number" required aria-label="Your phone">
+            <input type="text" name="puppy" placeholder="Which puppy are you interested in?" aria-label="Puppy name">
+            <textarea name="message" rows="3" placeholder="Your message or questions..." required aria-label="Your message"></textarea>
+            <button type="submit" class="cta-button" style="width:fit-content;">Send Message ✉️</button>
+          </form>
+          <div class="form-status" id="formStatus"></div>
+        </div>
+      </div>
+    </div>
 
-<!-- ✅ Video Modal -->
-<div class="video-modal-overlay" id="videoModal">
-  <div class="video-modal">
-    <button class="close-modal" id="closeVideoModal" aria-label="Close video">✕</button>
-    <video id="puppyVideo" controls playsinline>
-      <source src="" type="video/mp4">
-      Your browser does not support the video.
-    </video>
-  </div>
-</div>
-<script src="script.js"></script>
+  </div><!-- /app -->
+
+  <!-- ---- FLOATING WHATSAPP ---- -->
+  <a href="https://wa.me/233050843738" target="_blank" rel="noopener" class="floating-whatsapp" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">💬</a>
+
+  <!-- ---- BACK TO TOP ---- -->
+  <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">⬆</button>
+
+  <script>
+    (function() {
+      // ---- LOADING SCREEN ----
+      const loader = document.getElementById('loader');
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          document.body.classList.add('loaded');
+        }, 800);
+      });
+      // Fallback if load event already fired
+      setTimeout(() => {
+        if (!loader.classList.contains('hidden')) {
+          loader.classList.add('hidden');
+          document.body.classList.add('loaded');
+        }
+      }, 2000);
+
+      // ---- PUPPY DATA (Change images here!) ----
+      const puppies = [
+        {
+          id: 1, name: "Bella", breed: "Golden Retriever", age: "3 months", ageMonths: 3,
+          gender: "Female", fee: "$450",
+          description: "Friendly, playful and great with kids. Loves belly rubs and fetch.",
+          health: "Vaccinated, dewormed, microchipped",
+          personality: "Outgoing, affectionate, eager to please",
+          comesWith: "Starter food pack, blanket, toy, care guide",
+          photo: "https://placehold.co/400x400/f9c79a/5e3e1c?text=Bella"
+        },
+        {
+          id: 2, name: "Max", breed: "German Shepherd", age: "4 months", ageMonths: 4,
+          gender: "Male", fee: "$550",
+          description: "Loyal, smart and protective. Already knows sit, stay, and come.",
+          health: "Fully vaccinated, neutered, microchipped",
+          personality: "Confident, calm, highly trainable",
+          comesWith: "Leash, collar, training guide, toy",
+          photo: "https://placehold.co/400x400/d9a066/3e2c1b?text=Max"
+        },
+        {
+          id: 3, name: "Luna", breed: "Poodle", age: "2.5 months", ageMonths: 2.5,
+          gender: "Female", fee: "$600",
+          description: "Curly, hypoallergenic and loves to cuddle. Perfect for apartments.",
+          health: "Vaccinated, health certificate, microchipped",
+          personality: "Gentle, playful, lap-dog energy",
+          comesWith: "Grooming kit, small bed, toy, food samples",
+          photo: "https://placehold.co/400x400/e6c9a8/4a3724?text=Luna"
+        },
+        {
+          id: 4, name: "Buddy", breed: "Golden Retriever", age: "3.5 months", ageMonths: 3.5,
+          gender: "Male", fee: "$475",
+          description: "Energetic and loving. Great companion for active families.",
+          health: "Vaccinated, dewormed, microchipped",
+          personality: "Playful, loyal, loves water",
+          comesWith: "Food pack, leash, chew toy, blanket",
+          photo: "https://placehold.co/400x400/f0c78e/4a3724?text=Buddy"
+        }
+      ];
+
+      // ---- DOM REFS ----
+      const pages = {
+        home: document.getElementById('homePage'),
+        puppies: document.getElementById('puppiesPage'),
+        detail: document.getElementById('detailPage'),
+        faq: document.getElementById('faqPage'),
+        testimonials: document.getElementById('testimonialsPage'),
+        contact: document.getElementById('contactPage')
+      };
+      const navButtons = document.querySelectorAll('.nav-btn[data-page]');
+      const viewPuppiesBtn = document.getElementById('viewPuppiesBtn');
+      const backToPuppiesBtn = document.getElementById('backToPuppiesBtn');
+      const puppyGrid = document.getElementById('puppyGrid');
+      const detailContent = document.getElementById('detailContent');
+      const filterBreed = document.getElementById('filterBreed');
+      const filterGender = document.getElementById('filterGender');
+      const filterAge = document.getElementById('filterAge');
+      const filterSearch = document.getElementById('filterSearch');
+      const filterReset = document.getElementById('filterReset');
+      const navbarWrapper = document.getElementById('navbarWrapper');
+      const navbar = document.getElementById('navbar');
+      const backToTop = document.getElementById('backToTop');
+      const contactForm = document.getElementById('contactForm');
+      const formStatus = document.getElementById('formStatus');
+
+      let currentFilters = { breed: '', gender: '', age: '', search: '' };
+      let lastScrollY = window.scrollY;
+      let ticking = false;
+
+      // ---- SMART NAVBAR (Hide on scroll down, show on scroll up) ----
+      window.addEventListener('scroll', () => {
+        lastScrollY = window.scrollY;
+
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const currentScrollY = window.scrollY;
+
+            // Shrink navbar on scroll
+            if (currentScrollY > 50) {
+              navbar.classList.add('scrolled');
+            } else {
+              navbar.classList.remove('scrolled');
+            }
+
+            // Show/hide navbar based on scroll direction
+            if (currentScrollY > 150) {
+              if (currentScrollY > lastScrollY + 10) {
+                // Scrolling down
+                navbarWrapper.classList.add('nav-hidden');
+              } else if (currentScrollY < lastScrollY - 10) {
+                // Scrolling up
+                navbarWrapper.classList.remove('nav-hidden');
+              }
+            } else {
+              navbarWrapper.classList.remove('nav-hidden');
+            }
+
+            // Back to top button
+            if (currentScrollY > 400) {
+              backToTop.classList.add('visible');
+            } else {
+              backToTop.classList.remove('visible');
+            }
+
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // ---- BACK TO TOP ----
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // ---- PAGE SWITCHING ----
+      function switchPage(pageId) {
+        Object.values(pages).forEach(p => p?.classList.remove('active-page'));
+        if (pages[pageId]) pages[pageId].classList.add('active-page');
+
+        navButtons.forEach(btn => {
+          const page = btn.getAttribute('data-page');
+          if (page === pageId) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-current', 'page');
+          } else {
+            btn.classList.remove('active');
+            btn.removeAttribute('aria-current');
+          }
+        });
+
+        if (pageId === 'puppies') {
+          resetFilters();
+          renderPuppyGrid();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ---- FILTERS ----
+      function getFilteredPuppies() {
+        return puppies.filter(pup => {
+          if (currentFilters.breed && pup.breed !== currentFilters.breed) return false;
+          if (currentFilters.gender && pup.gender !== currentFilters.gender) return false;
+          if (currentFilters.age) {
+            const threshold = parseInt(currentFilters.age);
+            if (threshold === 2 && pup.ageMonths >= 3) return false;
+            if (threshold === 3 && (pup.ageMonths < 3 || pup.ageMonths >= 4)) return false;
+            if (threshold === 4 && pup.ageMonths < 4) return false;
+          }
+          if (currentFilters.search &&
+            !pup.name.toLowerCase().includes(currentFilters.search.toLowerCase()) &&
+            !pup.breed.toLowerCase().includes(currentFilters.search.toLowerCase())) return false;
+          return true;
+        });
+      }
+
+      function applyFilters() {
+        currentFilters.breed = filterBreed?.value || '';
+        currentFilters.gender = filterGender?.value || '';
+        currentFilters.age = filterAge?.value || '';
+        currentFilters.search = filterSearch?.value || '';
+        renderPuppyGrid();
+      }
+
+      function resetFilters() {
+        if (filterBreed) filterBreed.value = '';
+        if (filterGender) filterGender.value = '';
+        if (filterAge) filterAge.value = '';
+        if (filterSearch) filterSearch.value = '';
+        currentFilters = { breed: '', gender: '', age: '', search: '' };
+        renderPuppyGrid();
+      }
+
+      if (filterBreed) filterBreed.addEventListener('change', applyFilters);
+      if (filterGender) filterGender.addEventListener('change', applyFilters);
+      if (filterAge) filterAge.addEventListener('change', applyFilters);
+      if (filterSearch) filterSearch.addEventListener('input', applyFilters);
+      if (filterReset) filterReset.addEventListener('click', resetFilters);
+
+      // ---- RENDER PUPPY GRID ----
+      function renderPuppyGrid() {
+        if (!puppyGrid) return;
+        const filtered = getFilteredPuppies();
+        if (filtered.length === 0) {
+          puppyGrid.innerHTML = `<div class="no-results">🐾 No puppies match. <button class="filter-reset" style="margin-top:1rem;" onclick="document.getElementById('filterReset').click()">Reset</button></div>`;
+          return;
+        }
+        puppyGrid.innerHTML = filtered.map(pup => `
+          <div class="puppy-card" data-puppy-id="${pup.id}" tabindex="0" role="button" aria-label="View ${pup.name}">
+            <img src="${pup.photo}" alt="${pup.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400/fadcc5/5e3e1c?text=${encodeURIComponent(pup.name)}'; this.classList.add('error-fallback')">
+            <div class="puppy-info">
+              <h3>${pup.name}</h3>
+              <span class="badge">${pup.breed}</span>
+              <p>🐾 ${pup.age} · ${pup.gender}</p>
+              <p><strong>${pup.fee}</strong></p>
+              <small>${pup.description}</small>
+            </div>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.puppy-card').forEach(card => {
+          card.addEventListener('click', () => showPuppyDetail(card.getAttribute('data-puppy-id')));
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              showPuppyDetail(card.getAttribute('data-puppy-id'));
+            }
+          });
+        });
+      }
+
+      // ---- SHOW PUPPY DETAIL ----
+      function showPuppyDetail(puppyId) {
+        const pup = puppies.find(p => p.id == puppyId);
+        if (!pup) return;
+        switchPage('detail');
+        if (detailContent) {
+          detailContent.innerHTML = `
+            <img src="${pup.photo}" alt="${pup.name}" class="detail-photo" style="width:100%; max-width:400px; border-radius:2.5rem;" onerror="this.src='https://placehold.co/400x400/fadcc5/5e3e1c?text=${encodeURIComponent(pup.name)}'">
+            <div class="detail-content">
+              <h2 style="font-size:2.5rem; color:#4b2e1a;">${pup.name}</h2>
+              <p><strong>${pup.breed}</strong> · ${pup.age} · ${pup.gender}</p>
+              <p style="font-size:1.8rem; font-weight:700; color:#b45f3a;">${pup.fee}</p>
+              <p>✨ ${pup.description}</p>
+              <hr style="margin:1rem 0; border-color:#f0dcc8;">
+              <p>🩺 <strong>Health:</strong> ${pup.health}</p>
+              <p>🧸 <strong>Personality:</strong> ${pup.personality}</p>
+              <p>🎁 <strong>Comes with:</strong> ${pup.comesWith}</p>
+              <a href="https://wa.me/233050843738?text=Hi%20I'm%20interested%20in%20${encodeURIComponent(pup.name)}%20the%20${encodeURIComponent(pup.breed)}" target="_blank" rel="noopener" class="whatsapp-btn">💬 WhatsApp about ${pup.name}</a>
+              <p><a href="tel:+233050843738" style="color:#5e3e1c; min-height:44px; display:inline-block;">📞 Call: +233 50 843 738</a></p>
+            </div>
+          `;
+        }
+      }
+
+      // ---- FAQ ACCORDION ----
+      document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+          const item = q.parentElement;
+          const wasOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item.open').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          });
+          if (!wasOpen) {
+            item.classList.add('open');
+            q.setAttribute('aria-expanded', 'true');
+          }
+        });
+        q.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); }
+        });
+      });
+
+      // ---- FORM → WHATSAPP (Popup auto-close method) ----
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const name = contactForm.querySelector('[name="name"]').value.trim();
+          const phone = contactForm.querySelector('[name="phone"]').value.trim();
+          const puppy = contactForm.querySelector('[name="puppy"]').value.trim();
+          const message = contactForm.querySelector('[name="message"]').value.trim();
+
+          // Build WhatsApp message
+          let whatsappText = `🐾 *New Adoption Inquiry*%0A%0A`;
+          whatsappText += `👤 *Name:* ${encodeURIComponent(name)}%0A`;
+          whatsappText += `📱 *Phone:* ${encodeURIComponent(phone)}%0A`;
+          if (puppy) whatsappText += `🐶 *Interested in:* ${encodeURIComponent(puppy)}%0A`;
+          whatsappText += `💬 *Message:* ${encodeURIComponent(message)}`;
+
+          const whatsappURL = `https://wa.me/233050843738?text=${whatsappText}`;
+
+          // Open in tiny popup that auto-closes
+          const popup = window.open(whatsappURL, '_blank', 'width=400,height=600,left=' + (screen.width-420) + ',top=100');
+
+          // Show success message
+          showFormStatus('success', '✅ Message sent successfully! We\'ll contact you soon.');
+
+          // Close popup after 1.5 seconds
+          if (popup) {
+            setTimeout(() => {
+              try { popup.close(); } catch (err) { /* ignore */ }
+            }, 1500);
+          }
+
+          contactForm.reset();
+
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            if (formStatus) formStatus.style.display = 'none';
+          }, 5000);
+        });
+      }
+
+      function showFormStatus(type, message) {
+        if (!formStatus) return;
+        formStatus.textContent = message;
+        formStatus.className = 'form-status ' + type;
+        formStatus.style.display = 'block';
+      }
+
+      // ---- NAVIGATION CLICKS ----
+      navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const page = btn.getAttribute('data-page');
+          if (page) switchPage(page);
+        });
+      });
+
+      if (viewPuppiesBtn) viewPuppiesBtn.addEventListener('click', () => switchPage('puppies'));
+      if (backToPuppiesBtn) backToPuppiesBtn.addEventListener('click', () => switchPage('puppies'));
+
+      // ---- INIT ----
+      renderPuppyGrid();
+      switchPage('home');
+
+      console.log('🐾 Happy Paws ready!');
+      console.log('📱 WhatsApp: +233 50 843 738');
+      console.log('🖼️ Change images: edit "photo" URLs in puppies array');
+    })();
+  </script>
 </body>
 </html>
