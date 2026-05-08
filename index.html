@@ -64,27 +64,30 @@
       justify-content: flex-start;
       padding: 0 1rem 2rem;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease;
     }
 
     body.loaded {
       opacity: 1;
     }
 
-    /* ---- LOADING SCREEN ---- */
+    /* ══════════════════════════════════════
+       PREMIUM LOADING SCREEN
+       ══════════════════════════════════════ */
     .loader-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #fff8f0;
+      background: linear-gradient(160deg, #fff8f0 0%, #fff3e4 30%, #fef0db 60%, #fff5ec 100%);
       z-index: 9999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
     }
 
     .loader-overlay.hidden {
@@ -93,23 +96,149 @@
       pointer-events: none;
     }
 
-    .loader-paw {
-      font-size: 5rem;
-      animation: pawBounce 0.6s infinite alternate;
+    .loader-bg-paws {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.04;
+      pointer-events: none;
     }
 
-    .loader-text {
-      margin-top: 1rem;
-      font-weight: 700;
-      color: #b45f3a;
-      font-size: 1.3rem;
+    .loader-bg-paw {
+      position: absolute;
+      font-size: 3rem;
+      animation: floatPaw 8s infinite ease-in-out;
+    }
+
+    .loader-bg-paw:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .loader-bg-paw:nth-child(2) { top: 20%; right: 15%; animation-delay: 1.5s; font-size: 2.5rem; }
+    .loader-bg-paw:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 3s; font-size: 3.5rem; }
+    .loader-bg-paw:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 4.5s; font-size: 2rem; }
+    .loader-bg-paw:nth-child(5) { top: 40%; left: 50%; animation-delay: 6s; font-size: 2.8rem; }
+
+    @keyframes floatPaw {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      25% { transform: translateY(-30px) rotate(10deg); opacity: 0.8; }
+      50% { transform: translateY(-15px) rotate(-5deg); opacity: 0.5; }
+      75% { transform: translateY(-40px) rotate(8deg); opacity: 0.7; }
+    }
+
+    .loader-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      z-index: 2;
+    }
+
+    .loader-ripple-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader-pulse-ring {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 2px solid rgba(180, 95, 58, 0.15);
+      animation: pulseRing 3s infinite ease-out;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 0.2; }
+      100% { transform: scale(0.8); opacity: 0.6; }
+    }
+
+    .loader-ripple {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid rgba(180, 95, 58, 0.2);
+      animation: rippleOut 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .loader-ripple:nth-child(2) { animation-delay: 0.5s; }
+    .loader-ripple:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes rippleOut {
+      0% { transform: scale(0.6); opacity: 0.8; border-width: 3px; }
+      100% { transform: scale(1.5); opacity: 0; border-width: 1px; }
+    }
+
+    .loader-paw {
+      position: relative;
+      z-index: 3;
+      font-size: 3.5rem;
+      animation: pawBounce 0.7s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+      filter: drop-shadow(0 8px 15px rgba(180, 95, 58, 0.3));
     }
 
     @keyframes pawBounce {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-20px) scale(1.1); }
+      0% { transform: translateY(0) scale(1) rotate(0deg); }
+      30% { transform: translateY(-25px) scale(1.15) rotate(-5deg); }
+      60% { transform: translateY(-10px) scale(1.05) rotate(3deg); }
+      100% { transform: translateY(-20px) scale(1.1) rotate(0deg); }
     }
 
+    .loader-shadow {
+      width: 50px;
+      height: 8px;
+      background: rgba(180, 95, 58, 0.2);
+      border-radius: 50%;
+      animation: shadowPulse 0.7s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    @keyframes shadowPulse {
+      0% { transform: scale(1); opacity: 0.3; }
+      100% { transform: scale(1.4); opacity: 0.1; }
+    }
+
+    .loader-text {
+      font-weight: 700;
+      color: #b45f3a;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      animation: textPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes textPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .loader-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .loader-dot {
+      width: 8px;
+      height: 8px;
+      background: #b45f3a;
+      border-radius: 50%;
+      animation: dotBounce 1.4s infinite ease-in-out;
+    }
+
+    .loader-dot:nth-child(1) { animation-delay: 0s; }
+    .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.4); opacity: 0.3; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════
+       APP CONTAINER
+       ══════════════════════════════════════ */
     .app {
       max-width: 1300px;
       width: 100%;
@@ -126,7 +255,9 @@
       border: 1px solid rgba(255,255,240,0.7);
     }
 
-    /* ---- NAVBAR (Fixed - no shaking) ---- */
+    /* ══════════════════════════════════════
+       NAVBAR (Fixed - no shaking)
+       ══════════════════════════════════════ */
     .navbar-wrapper {
       position: sticky;
       top: 0.5rem;
@@ -237,7 +368,9 @@
       font-weight: 700;
     }
 
-    /* ---- PAGES ---- */
+    /* ══════════════════════════════════════
+       PAGES
+       ══════════════════════════════════════ */
     .page {
       display: none;
       width: 100%;
@@ -253,7 +386,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---- HERO ---- */
+    /* ══════════════════════════════════════
+       HERO
+       ══════════════════════════════════════ */
     .hero {
       display: flex;
       flex-direction: row;
@@ -327,7 +462,15 @@
       box-shadow: 0 16px 25px -10px #c96e2c;
     }
 
-    /* ---- FILTER BAR ---- */
+    .cta-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ══════════════════════════════════════
+       FILTER BAR
+       ══════════════════════════════════════ */
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
@@ -375,7 +518,9 @@
       background: #e2ccb0;
     }
 
-    /* ---- GALLERY ---- */
+    /* ══════════════════════════════════════
+       PUPPY GALLERY
+       ══════════════════════════════════════ */
     .gallery-title {
       font-size: 2.2rem;
       font-weight: 700;
@@ -466,7 +611,9 @@
       margin: 0.3rem 0;
     }
 
-    /* ---- DETAIL PAGE ---- */
+    /* ══════════════════════════════════════
+       DETAIL PAGE
+       ══════════════════════════════════════ */
     .detail-container {
       background: #fffaf4;
       border-radius: 3rem;
@@ -514,7 +661,9 @@
       transform: scale(1.02);
     }
 
-    /* ---- FAQ ---- */
+    /* ══════════════════════════════════════
+       FAQ
+       ══════════════════════════════════════ */
     .faq-section {
       background: #fffbf5;
       border-radius: 2.5rem;
@@ -565,7 +714,9 @@
       transform: rotate(180deg);
     }
 
-    /* ---- TESTIMONIALS ---- */
+    /* ══════════════════════════════════════
+       TESTIMONIALS
+       ══════════════════════════════════════ */
     .testimonial-carousel {
       display: flex;
       gap: 1.5rem;
@@ -606,7 +757,9 @@
       color: #b45f3a;
     }
 
-    /* ---- FLOATING BUTTONS ---- */
+    /* ══════════════════════════════════════
+       FLOATING BUTTONS
+       ══════════════════════════════════════ */
     .floating-whatsapp {
       position: fixed;
       bottom: 1.5rem;
@@ -667,7 +820,9 @@
       transform: translateY(-3px);
     }
 
-    /* ---- FORM ---- */
+    /* ══════════════════════════════════════
+       CONTACT FORM
+       ══════════════════════════════════════ */
     .contact-form {
       display: flex;
       flex-direction: column;
@@ -705,6 +860,7 @@
       font-weight: 600;
       display: none;
       margin-top: 0.5rem;
+      animation: fadeSlide 0.3s ease;
     }
 
     .form-status.success {
@@ -733,9 +889,16 @@
       padding: 0.7rem 1.5rem;
       border-radius: 3rem;
       cursor: pointer;
+      transition: 0.2s;
     }
 
-    /* ---- RESPONSIVE ---- */
+    #backToPuppiesBtn:hover {
+      background: #e2ccb0;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+       ══════════════════════════════════════ */
     @media (max-width: 768px) {
       .navbar {
         flex-direction: column;
@@ -793,18 +956,55 @@
       .testimonial-card {
         min-width: 240px;
       }
+      .loader-paw {
+        font-size: 2.5rem;
+      }
+      .loader-ripple-container {
+        width: 90px;
+        height: 90px;
+      }
+      .loader-pulse-ring {
+        width: 110px;
+        height: 110px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ---- LOADING SCREEN ---- -->
+  <!-- ══════════════════════════════════════
+       PREMIUM LOADING SCREEN
+       ══════════════════════════════════════ -->
   <div class="loader-overlay" id="loader">
-    <div class="loader-paw">🐾</div>
-    <div class="loader-text">Finding your perfect puppy...</div>
+    <div class="loader-bg-paws">
+      <span class="loader-bg-paw">🐾</span>
+      <span class="loader-bg-paw">🐾</span>
+      <span class="loader-bg-paw">🐾</span>
+      <span class="loader-bg-paw">🐾</span>
+      <span class="loader-bg-paw">🐾</span>
+    </div>
+
+    <div class="loader-content">
+      <div class="loader-ripple-container">
+        <div class="loader-pulse-ring"></div>
+        <div class="loader-ripple"></div>
+        <div class="loader-ripple"></div>
+        <div class="loader-ripple"></div>
+        <span class="loader-paw">🐾</span>
+      </div>
+      <div class="loader-shadow"></div>
+      <p class="loader-text">Finding your perfect puppy</p>
+      <div class="loader-dots">
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+      </div>
+    </div>
   </div>
 
-  <!-- ---- NAVBAR ---- -->
+  <!-- ══════════════════════════════════════
+       NAVBAR
+       ══════════════════════════════════════ -->
   <div class="navbar-wrapper" id="navbarWrapper">
     <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
       <div class="logo" onclick="document.querySelector('[data-page=home]').click()" title="Go to homepage" role="button" tabindex="0" aria-label="Happy Paws Home">
@@ -820,9 +1020,12 @@
     </nav>
   </div>
 
+  <!-- ══════════════════════════════════════
+       APP CONTENT
+       ══════════════════════════════════════ -->
   <div class="app">
 
-    <!-- ---- HOMEPAGE ---- -->
+    <!-- HOME -->
     <div id="homePage" class="page active-page">
       <div class="hero">
         <div class="hero-image">
@@ -841,7 +1044,7 @@
       </div>
     </div>
 
-    <!-- ---- PUPPIES PAGE ---- -->
+    <!-- PUPPIES -->
     <div id="puppiesPage" class="page">
       <h2 class="gallery-title">🐕 Meet our puppies</h2>
       <div class="filter-bar" id="filterBar">
@@ -868,13 +1071,13 @@
       <div class="puppy-grid" id="puppyGrid"></div>
     </div>
 
-    <!-- ---- DETAIL PAGE ---- -->
+    <!-- DETAIL -->
     <div id="detailPage" class="page">
       <div id="detailContent" class="detail-container"></div>
-      <button class="nav-btn" id="backToPuppiesBtn" style="margin-top:1.5rem;">⬅ Back to all puppies</button>
+      <button id="backToPuppiesBtn" style="margin-top:1.5rem;">⬅ Back to all puppies</button>
     </div>
 
-    <!-- ---- FAQ PAGE ---- -->
+    <!-- FAQ -->
     <div id="faqPage" class="page">
       <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">❓ Adoption FAQ</h2>
       <div class="faq-section">
@@ -901,7 +1104,7 @@
       </div>
     </div>
 
-    <!-- ---- TESTIMONIALS ---- -->
+    <!-- TESTIMONIALS -->
     <div id="testimonialsPage" class="page">
       <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">💚 Happy Adoption Stories</h2>
       <div class="testimonial-carousel">
@@ -912,7 +1115,7 @@
       </div>
     </div>
 
-    <!-- ---- CONTACT PAGE ---- -->
+    <!-- CONTACT -->
     <div id="contactPage" class="page">
       <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">📞 Contact Us</h2>
       <div style="display:flex; flex-wrap:wrap; gap:2rem;">
@@ -925,7 +1128,6 @@
           </div>
         </div>
         <div style="flex:1; background: #faf5ef; padding:1.5rem; border-radius:2rem;">
-          <!-- ✅ FORMSPREE FORM - sends silently to your email -->
           <form class="contact-form" id="contactForm" action="https://formspree.io/f/mjgleajo" method="POST">
             <input type="text" name="name" placeholder="Your name" required aria-label="Your name">
             <input type="tel" name="phone" placeholder="Your phone number" required aria-label="Your phone">
@@ -938,32 +1140,44 @@
       </div>
     </div>
 
-  </div><!-- /app -->
+  </div>
 
-  <!-- ---- FLOATING WHATSAPP ---- -->
+  <!-- ══════════════════════════════════════
+       FLOATING BUTTONS
+       ══════════════════════════════════════ -->
   <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" class="floating-whatsapp" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">💬</a>
-
-  <!-- ---- BACK TO TOP ---- -->
   <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">⬆</button>
 
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+       ══════════════════════════════════════ -->
   <script>
     (function() {
-      // ---- LOADING SCREEN ----
+      // ═══════════════════════════════════
+      // PREMIUM LOADING SCREEN
+      // ═══════════════════════════════════
       const loader = document.getElementById('loader');
+
+      function hideLoader() {
+        loader.classList.add('hidden');
+        document.body.classList.add('loaded');
+      }
+
       window.addEventListener('load', () => {
         setTimeout(() => {
-          loader.classList.add('hidden');
-          document.body.classList.add('loaded');
-        }, 800);
+          hideLoader();
+        }, 3000);
       });
+
       setTimeout(() => {
         if (!loader.classList.contains('hidden')) {
-          loader.classList.add('hidden');
-          document.body.classList.add('loaded');
+          hideLoader();
         }
-      }, 2500);
+      }, 5000);
 
-      // ---- PUPPY DATA ----
+      // ═══════════════════════════════════
+      // PUPPY DATA
+      // ═══════════════════════════════════
       const puppies = [
         {
           id: 1, name: "Bella", breed: "Golden Retriever", age: "3 months", ageMonths: 3,
@@ -1003,7 +1217,9 @@
         }
       ];
 
-      // ---- DOM REFS ----
+      // ═══════════════════════════════════
+      // DOM REFERENCES
+      // ═══════════════════════════════════
       const pages = {
         home: document.getElementById('homePage'),
         puppies: document.getElementById('puppiesPage'),
@@ -1033,20 +1249,20 @@
       let scrollTimeout = null;
       let ticking = false;
 
-      // ---- SMART NAVBAR (Fixed - no shaking) ----
+      // ═══════════════════════════════════
+      // SMART NAVBAR (Fixed - no shaking)
+      // ═══════════════════════════════════
       window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
 
         if (!ticking) {
           requestAnimationFrame(() => {
-            // Shrink navbar
             if (currentScrollY > 80) {
               navbar.classList.add('scrolled');
             } else {
               navbar.classList.remove('scrolled');
             }
 
-            // Hide/show navbar (with debounce to prevent shaking)
             if (scrollTimeout) clearTimeout(scrollTimeout);
 
             scrollTimeout = setTimeout(() => {
@@ -1054,10 +1270,8 @@
 
               if (nowScrollY > 200) {
                 if (nowScrollY > lastScrollY + 30) {
-                  // Scrolling down significantly
                   navbarWrapper.classList.add('nav-hidden');
                 } else if (nowScrollY < lastScrollY - 20) {
-                  // Scrolling up
                   navbarWrapper.classList.remove('nav-hidden');
                 }
               } else {
@@ -1065,9 +1279,8 @@
               }
 
               lastScrollY = nowScrollY;
-            }, 50); // 50ms debounce prevents shaking
+            }, 50);
 
-            // Back to top button
             if (currentScrollY > 500) {
               backToTop.classList.add('visible');
             } else {
@@ -1080,12 +1293,16 @@
         }
       }, { passive: true });
 
-      // ---- BACK TO TOP ----
+      // ═══════════════════════════════════
+      // BACK TO TOP
+      // ═══════════════════════════════════
       backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // ---- PAGE SWITCHING ----
+      // ═══════════════════════════════════
+      // PAGE SWITCHING
+      // ═══════════════════════════════════
       function switchPage(pageId) {
         Object.values(pages).forEach(p => p?.classList.remove('active-page'));
         if (pages[pageId]) pages[pageId].classList.add('active-page');
@@ -1108,7 +1325,9 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // ---- FILTERS ----
+      // ═══════════════════════════════════
+      // FILTERS
+      // ═══════════════════════════════════
       function getFilteredPuppies() {
         return puppies.filter(pup => {
           if (currentFilters.breed && pup.breed !== currentFilters.breed) return false;
@@ -1149,7 +1368,9 @@
       if (filterSearch) filterSearch.addEventListener('input', applyFilters);
       if (filterReset) filterReset.addEventListener('click', resetFilters);
 
-      // ---- RENDER PUPPY GRID ----
+      // ═══════════════════════════════════
+      // RENDER PUPPY GRID
+      // ═══════════════════════════════════
       function renderPuppyGrid() {
         if (!puppyGrid) return;
         const filtered = getFilteredPuppies();
@@ -1181,7 +1402,9 @@
         });
       }
 
-      // ---- SHOW PUPPY DETAIL ----
+      // ═══════════════════════════════════
+      // SHOW PUPPY DETAIL
+      // ═══════════════════════════════════
       function showPuppyDetail(puppyId) {
         const pup = puppies.find(p => p.id == puppyId);
         if (!pup) return;
@@ -1205,7 +1428,9 @@
         }
       }
 
-      // ---- FAQ ACCORDION ----
+      // ═══════════════════════════════════
+      // FAQ ACCORDION
+      // ═══════════════════════════════════
       document.querySelectorAll('.faq-question').forEach(q => {
         q.addEventListener('click', () => {
           const item = q.parentElement;
@@ -1224,7 +1449,9 @@
         });
       });
 
-      // ---- FORMSPREE FORM (Silent - no WhatsApp popup) ----
+      // ═══════════════════════════════════
+      // FORMSPREE FORM (Silent delivery)
+      // ═══════════════════════════════════
       if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
           e.preventDefault();
@@ -1250,7 +1477,7 @@
               throw new Error('Form submission failed');
             }
           } catch (err) {
-            showFormStatus('error', '❌ Oops! Please try again or call us directly at +233 50 843 7839');
+            showFormStatus('error', '❌ Oops! Please try again or call us at +233 50 843 7839');
           }
 
           submitBtn.textContent = originalText;
@@ -1269,7 +1496,9 @@
         formStatus.style.display = 'block';
       }
 
-      // ---- NAVIGATION ----
+      // ═══════════════════════════════════
+      // NAVIGATION
+      // ═══════════════════════════════════
       navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
           const page = btn.getAttribute('data-page');
@@ -1280,13 +1509,15 @@
       if (viewPuppiesBtn) viewPuppiesBtn.addEventListener('click', () => switchPage('puppies'));
       if (backToPuppiesBtn) backToPuppiesBtn.addEventListener('click', () => switchPage('puppies'));
 
-      // ---- INIT ----
+      // ═══════════════════════════════════
+      // INIT
+      // ═══════════════════════════════════
       renderPuppyGrid();
       switchPage('home');
 
       console.log('🐾 Happy Paws ready!');
       console.log('📱 Number: +233 50 843 7839');
-      console.log('📧 Formspree: mjgleajo');
+      console.log('📧 Formspree ID: mjgleajo');
       console.log('🖼️ Change images: edit "photo" URLs in puppies array');
     })();
   </script>
