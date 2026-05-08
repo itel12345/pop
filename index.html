@@ -21,7 +21,7 @@
       "@context": "https://schema.org",
       "@type": "AnimalShelter",
       "name": "Happy Paws Adoption Center",
-      "telephone": "+233050843738",
+      "telephone": "+2330508437839",
       "description": "We help loving puppies find forever homes. All puppies are vaccinated, microchipped, and health-certified."
     }
   </script>
@@ -126,7 +126,7 @@
       border: 1px solid rgba(255,255,240,0.7);
     }
 
-    /* ---- SMART NAVBAR (hides on scroll down, shows on scroll up) ---- */
+    /* ---- NAVBAR (Fixed - no shaking) ---- */
     .navbar-wrapper {
       position: sticky;
       top: 0.5rem;
@@ -134,11 +134,11 @@
       width: 100%;
       max-width: 1300px;
       margin: 0 auto;
-      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
     }
 
     .navbar-wrapper.nav-hidden {
-      transform: translateY(-130%);
+      transform: translateY(-140%);
       opacity: 0;
       pointer-events: none;
     }
@@ -156,11 +156,11 @@
       box-shadow: 0 10px 35px rgba(94, 62, 28, 0.1);
       gap: 0.8rem;
       border: 1px solid rgba(255,255,255,0.8);
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: padding 0.35s ease, border-radius 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
     }
 
     .navbar.scrolled {
-      padding: 0.35rem 1.2rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 50px;
       box-shadow: 0 5px 20px rgba(94, 62, 28, 0.12);
       background: rgba(255, 255, 255, 0.97);
@@ -719,6 +719,12 @@
       color: #721c24;
     }
 
+    .form-status.loading {
+      display: block;
+      background: #fff3cd;
+      color: #856404;
+    }
+
     #backToPuppiesBtn {
       background: #f0e0ce;
       font-weight: 600;
@@ -726,6 +732,7 @@
       border: none;
       padding: 0.7rem 1.5rem;
       border-radius: 3rem;
+      cursor: pointer;
     }
 
     /* ---- RESPONSIVE ---- */
@@ -797,7 +804,7 @@
     <div class="loader-text">Finding your perfect puppy...</div>
   </div>
 
-  <!-- ---- NAVBAR WRAPPER ---- -->
+  <!-- ---- NAVBAR ---- -->
   <div class="navbar-wrapper" id="navbarWrapper">
     <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
       <div class="logo" onclick="document.querySelector('[data-page=home]').click()" title="Go to homepage" role="button" tabindex="0" aria-label="Happy Paws Home">
@@ -911,14 +918,15 @@
       <div style="display:flex; flex-wrap:wrap; gap:2rem;">
         <div style="flex:1; background: #fff5e9; padding: 1.5rem; border-radius: 2rem;">
           <p><strong>📍 City:</strong> Accra, Ghana</p>
-          <p><strong>📱 Phone:</strong> <a href="tel:+233050843738" style="color:#b45f3a; min-height:44px; display:inline-block;">+233 50 843 738</a></p>
-          <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/233050843738" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
+          <p><strong>📱 Phone:</strong> <a href="tel:+2330508437839" style="color:#b45f3a; min-height:44px; display:inline-block;">+233 50 843 7839</a></p>
+          <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
           <div style="margin-top:1.5rem; background: #fce4d6; padding:1rem; border-radius:1.5rem;">
             <p><em>⏰ We answer within minutes!</em></p>
           </div>
         </div>
         <div style="flex:1; background: #faf5ef; padding:1.5rem; border-radius:2rem;">
-          <form class="contact-form" id="contactForm">
+          <!-- ✅ FORMSPREE FORM - sends silently to your email -->
+          <form class="contact-form" id="contactForm" action="https://formspree.io/f/mjgleajo" method="POST">
             <input type="text" name="name" placeholder="Your name" required aria-label="Your name">
             <input type="tel" name="phone" placeholder="Your phone number" required aria-label="Your phone">
             <input type="text" name="puppy" placeholder="Which puppy are you interested in?" aria-label="Puppy name">
@@ -933,7 +941,7 @@
   </div><!-- /app -->
 
   <!-- ---- FLOATING WHATSAPP ---- -->
-  <a href="https://wa.me/233050843738" target="_blank" rel="noopener" class="floating-whatsapp" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">💬</a>
+  <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" class="floating-whatsapp" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">💬</a>
 
   <!-- ---- BACK TO TOP ---- -->
   <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">⬆</button>
@@ -948,15 +956,14 @@
           document.body.classList.add('loaded');
         }, 800);
       });
-      // Fallback if load event already fired
       setTimeout(() => {
         if (!loader.classList.contains('hidden')) {
           loader.classList.add('hidden');
           document.body.classList.add('loaded');
         }
-      }, 2000);
+      }, 2500);
 
-      // ---- PUPPY DATA (Change images here!) ----
+      // ---- PUPPY DATA ----
       const puppies = [
         {
           id: 1, name: "Bella", breed: "Golden Retriever", age: "3 months", ageMonths: 3,
@@ -1023,38 +1030,45 @@
 
       let currentFilters = { breed: '', gender: '', age: '', search: '' };
       let lastScrollY = window.scrollY;
+      let scrollTimeout = null;
       let ticking = false;
 
-      // ---- SMART NAVBAR (Hide on scroll down, show on scroll up) ----
+      // ---- SMART NAVBAR (Fixed - no shaking) ----
       window.addEventListener('scroll', () => {
-        lastScrollY = window.scrollY;
+        const currentScrollY = window.scrollY;
 
         if (!ticking) {
           requestAnimationFrame(() => {
-            const currentScrollY = window.scrollY;
-
-            // Shrink navbar on scroll
-            if (currentScrollY > 50) {
+            // Shrink navbar
+            if (currentScrollY > 80) {
               navbar.classList.add('scrolled');
             } else {
               navbar.classList.remove('scrolled');
             }
 
-            // Show/hide navbar based on scroll direction
-            if (currentScrollY > 150) {
-              if (currentScrollY > lastScrollY + 10) {
-                // Scrolling down
-                navbarWrapper.classList.add('nav-hidden');
-              } else if (currentScrollY < lastScrollY - 10) {
-                // Scrolling up
+            // Hide/show navbar (with debounce to prevent shaking)
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+
+            scrollTimeout = setTimeout(() => {
+              const nowScrollY = window.scrollY;
+
+              if (nowScrollY > 200) {
+                if (nowScrollY > lastScrollY + 30) {
+                  // Scrolling down significantly
+                  navbarWrapper.classList.add('nav-hidden');
+                } else if (nowScrollY < lastScrollY - 20) {
+                  // Scrolling up
+                  navbarWrapper.classList.remove('nav-hidden');
+                }
+              } else {
                 navbarWrapper.classList.remove('nav-hidden');
               }
-            } else {
-              navbarWrapper.classList.remove('nav-hidden');
-            }
+
+              lastScrollY = nowScrollY;
+            }, 50); // 50ms debounce prevents shaking
 
             // Back to top button
-            if (currentScrollY > 400) {
+            if (currentScrollY > 500) {
               backToTop.classList.add('visible');
             } else {
               backToTop.classList.remove('visible');
@@ -1064,7 +1078,7 @@
           });
           ticking = true;
         }
-      });
+      }, { passive: true });
 
       // ---- BACK TO TOP ----
       backToTop.addEventListener('click', () => {
@@ -1184,8 +1198,8 @@
               <p>🩺 <strong>Health:</strong> ${pup.health}</p>
               <p>🧸 <strong>Personality:</strong> ${pup.personality}</p>
               <p>🎁 <strong>Comes with:</strong> ${pup.comesWith}</p>
-              <a href="https://wa.me/233050843738?text=Hi%20I'm%20interested%20in%20${encodeURIComponent(pup.name)}%20the%20${encodeURIComponent(pup.breed)}" target="_blank" rel="noopener" class="whatsapp-btn">💬 WhatsApp about ${pup.name}</a>
-              <p><a href="tel:+233050843738" style="color:#5e3e1c; min-height:44px; display:inline-block;">📞 Call: +233 50 843 738</a></p>
+              <a href="https://wa.me/2330508437839?text=Hi%20I'm%20interested%20in%20${encodeURIComponent(pup.name)}%20the%20${encodeURIComponent(pup.breed)}" target="_blank" rel="noopener" class="whatsapp-btn">💬 WhatsApp about ${pup.name}</a>
+              <p><a href="tel:+2330508437839" style="color:#5e3e1c; min-height:44px; display:inline-block;">📞 Call: +233 50 843 7839</a></p>
             </div>
           `;
         }
@@ -1210,44 +1224,41 @@
         });
       });
 
-      // ---- FORM → WHATSAPP (Popup auto-close method) ----
+      // ---- FORMSPREE FORM (Silent - no WhatsApp popup) ----
       if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
           e.preventDefault();
 
-          const name = contactForm.querySelector('[name="name"]').value.trim();
-          const phone = contactForm.querySelector('[name="phone"]').value.trim();
-          const puppy = contactForm.querySelector('[name="puppy"]').value.trim();
-          const message = contactForm.querySelector('[name="message"]').value.trim();
+          const submitBtn = contactForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = '⏳ Sending...';
+          submitBtn.disabled = true;
+          showFormStatus('loading', '⏳ Sending your message...');
 
-          // Build WhatsApp message
-          let whatsappText = `🐾 *New Adoption Inquiry*%0A%0A`;
-          whatsappText += `👤 *Name:* ${encodeURIComponent(name)}%0A`;
-          whatsappText += `📱 *Phone:* ${encodeURIComponent(phone)}%0A`;
-          if (puppy) whatsappText += `🐶 *Interested in:* ${encodeURIComponent(puppy)}%0A`;
-          whatsappText += `💬 *Message:* ${encodeURIComponent(message)}`;
+          try {
+            const formData = new FormData(contactForm);
+            const response = await fetch(contactForm.action, {
+              method: 'POST',
+              body: formData,
+              headers: { 'Accept': 'application/json' }
+            });
 
-          const whatsappURL = `https://wa.me/233050843738?text=${whatsappText}`;
-
-          // Open in tiny popup that auto-closes
-          const popup = window.open(whatsappURL, '_blank', 'width=400,height=600,left=' + (screen.width-420) + ',top=100');
-
-          // Show success message
-          showFormStatus('success', '✅ Message sent successfully! We\'ll contact you soon.');
-
-          // Close popup after 1.5 seconds
-          if (popup) {
-            setTimeout(() => {
-              try { popup.close(); } catch (err) { /* ignore */ }
-            }, 1500);
+            if (response.ok) {
+              showFormStatus('success', '✅ Message sent successfully! We\'ll contact you soon.');
+              contactForm.reset();
+            } else {
+              throw new Error('Form submission failed');
+            }
+          } catch (err) {
+            showFormStatus('error', '❌ Oops! Please try again or call us directly at +233 50 843 7839');
           }
 
-          contactForm.reset();
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
 
-          // Hide success message after 5 seconds
           setTimeout(() => {
             if (formStatus) formStatus.style.display = 'none';
-          }, 5000);
+          }, 6000);
         });
       }
 
@@ -1258,7 +1269,7 @@
         formStatus.style.display = 'block';
       }
 
-      // ---- NAVIGATION CLICKS ----
+      // ---- NAVIGATION ----
       navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
           const page = btn.getAttribute('data-page');
@@ -1274,7 +1285,8 @@
       switchPage('home');
 
       console.log('🐾 Happy Paws ready!');
-      console.log('📱 WhatsApp: +233 50 843 738');
+      console.log('📱 Number: +233 50 843 7839');
+      console.log('📧 Formspree: mjgleajo');
       console.log('🖼️ Change images: edit "photo" URLs in puppies array');
     })();
   </script>
