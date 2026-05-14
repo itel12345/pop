@@ -21,12 +21,13 @@
       "@context": "https://schema.org",
       "@type": "AnimalShelter",
       "name": "Happy Paws Adoption Center",
-      "telephone": "+2330508437839",
+      "telephone": "+447403676041",
       "description": "We help loving puppies find forever homes. All puppies are vaccinated, microchipped, and health-certified."
     }
   </script>
 
   <title>Happy Paws Adoption · Find your puppy 🐾</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🐾</text></svg>">
 
   <style>
     * {
@@ -34,14 +35,7 @@
       padding: 0;
       box-sizing: border-box;
     }
-    body::before {
-    content: '';
-    position: fixed;
-     top: 0; left: 0; width: 100%; height: 100%;
-     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ctext y='70' font-size='50' opacity='0.03'%3E🐾%3C/text%3E%3C/svg%3E");
-     pointer-events: none;
-     z-index: 0;
-    }
+
     :root {
       --paw-pink: #f9d5d3;
       --soft-cream: #fef9e7;
@@ -70,6 +64,23 @@
       align-items: center;
       justify-content: flex-start;
       padding: 0 1rem 2rem;
+      position: relative;
+    }
+
+    /* ══════════════════════════════════════
+       PAW PRINT BACKGROUND PATTERN
+       ══════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='40' opacity='0.03'%3E🐾%3C/text%3E%3C/svg%3E");
+      background-size: 100px 100px;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ══════════════════════════════════════
@@ -171,17 +182,54 @@
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      background: rgba(255,255,250,0.65);
+      background: rgba(255,255,250,0.7);
       backdrop-filter: blur(14px);
       border-radius: 3.5rem 3.5rem 3rem 3rem;
       padding: 1.8rem 1.2rem 2.5rem;
       box-shadow: 0 25px 45px rgba(94, 62, 28, 0.1);
       margin-top: 0.5rem;
-      border: 1px solid rgba(255,255,240,0.7);
+      border: 1px solid rgba(255,255,240,0.8);
+      position: relative;
+      z-index: 1;
     }
 
     /* ══════════════════════════════════════
-       NAVBAR (Fixed - no shaking)
+       VISITOR COUNTER
+       ══════════════════════════════════════ */
+    .visitor-counter {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 200;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #5e3e1c;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .visitor-dot {
+      width: 8px;
+      height: 8px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: dotPulse 2s infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ══════════════════════════════════════
+       NAVBAR
        ══════════════════════════════════════ */
     .navbar-wrapper {
       position: sticky;
@@ -331,7 +379,6 @@
       text-align: center;
     }
 
-    /* ✅ PERFECT IMAGE FIT - No stretching */
     .hero-image .big-puppy {
       width: 100%;
       max-width: 400px;
@@ -448,7 +495,7 @@
     }
 
     /* ══════════════════════════════════════
-       PUPPY GALLERY - Perfect images
+       PUPPY GALLERY
        ══════════════════════════════════════ */
     .gallery-title {
       font-size: 2.2rem;
@@ -499,7 +546,6 @@
       background: white;
     }
 
-    /* ✅ PERFECT IMAGE CONTAINER */
     .puppy-card .img-container {
       width: 100%;
       aspect-ratio: 1/1;
@@ -511,7 +557,6 @@
       position: relative;
     }
 
-    /* ✅ IMAGE FITS PERFECTLY - covers area, no stretching */
     .puppy-card .img-container img {
       width: 100%;
       height: 100%;
@@ -522,6 +567,23 @@
 
     .puppy-card:hover .img-container img {
       transform: scale(1.05);
+    }
+
+    .puppy-card .viewers-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 0.7rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      z-index: 5;
+      backdrop-filter: blur(4px);
     }
 
     .puppy-info h3 {
@@ -541,8 +603,15 @@
       margin: 0.3rem 0;
     }
 
+    .age-counter {
+      font-size: 0.8rem;
+      color: #8b6f5a;
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
+
     /* ══════════════════════════════════════
-       DETAIL PAGE - Perfect images
+       DETAIL PAGE
        ══════════════════════════════════════ */
     .detail-container {
       background: #fffaf4;
@@ -554,7 +623,6 @@
       background: linear-gradient(135deg, #fff9f0, #fff5e6);
     }
 
-    /* ✅ PERFECT DETAIL IMAGE */
     .detail-photo {
       flex: 1 1 280px;
       width: 100%;
@@ -569,6 +637,27 @@
 
     .detail-content {
       flex: 1 1 300px;
+    }
+
+    .detail-viewers {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #e8f5e9;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-viewers .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: dotPulse 1.5s infinite;
     }
 
     .whatsapp-btn {
@@ -876,6 +965,12 @@
         bottom: 1rem;
         left: 1rem;
       }
+      .visitor-counter {
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 0.7rem;
+        padding: 0.3rem 0.7rem;
+      }
     }
 
     @media (max-width: 480px) {
@@ -892,11 +987,10 @@
     }
   </style>
 </head>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🐾</text></svg>">
 <body>
 
   <!-- ══════════════════════════════════════
-       FAST PROFESSIONAL LOADER
+       LOADER
        ══════════════════════════════════════ -->
   <div class="loader-overlay" id="loader">
     <div class="loader-icon">
@@ -904,6 +998,14 @@
       <span class="loader-paw-main">🐾</span>
     </div>
     <p class="loader-text">Finding your perfect puppy...</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       VISITOR COUNTER
+       ══════════════════════════════════════ -->
+  <div class="visitor-counter" id="visitorCounter">
+    <span class="visitor-dot"></span>
+    <span id="visitorCount">1</span> people viewing now
   </div>
 
   <!-- ══════════════════════════════════════
@@ -933,7 +1035,7 @@
     <div id="homePage" class="page active-page">
       <div class="hero">
         <div class="hero-image">
-          <img src="./img/adorable-bernese-mountain-dog-puppy-600nw-2580967523-removebg-preview.png"
+          <img src="https://placehold.co/500x500/fadcc5/5e3e1c?text=Happy+Puppy"
           alt="Cute adoptable puppy waiting for a home"
           class="big-puppy"
           loading="eager">
@@ -1022,9 +1124,10 @@
       <h2 style="font-size:2.3rem; margin-bottom:1rem; color:#4b3822;">📞 Contact Us</h2>
       <div style="display:flex; flex-wrap:wrap; gap:2rem;">
         <div style="flex:1; background: #fff5e9; padding: 1.5rem; border-radius: 2rem;">
-          <p><strong>📍 City:</strong> Accra, Ghana</p>
-          <p><strong>📱 Phone:</strong> <a href="tel:+2330508437839" style="color:#b45f3a; min-height:44px; display:inline-block;">+233 50 843 7839</a></p>
-          <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
+          <p><strong>📍 City:</strong> London, UK</p>
+          <p><strong>📱 Phone:</strong> <a href="tel:+447403676041" style="color:#b45f3a; min-height:44px; display:inline-block;">+(44) 740 367 6041</a></p>
+          <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/447403676041" target="_blank" rel="noopener" style="color:#25D366;">Chat with us</a></p>
+          <p><strong>📧 Email:</strong> <a href="mailto:patricktiwa76@gmail.com" style="color:#b45f3a;">patricktiwa76@gmail.com</a></p>
           <div style="margin-top:1.5rem; background: #fce4d6; padding:1rem; border-radius:1.5rem;">
             <p><em>⏰ We answer within minutes!</em></p>
           </div>
@@ -1047,94 +1150,73 @@
   <!-- ══════════════════════════════════════
        FLOATING BUTTONS
        ══════════════════════════════════════ -->
-  <a href="https://wa.me/2330508437839" target="_blank" rel="noopener" class="floating-whatsapp" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">💬</a>
+  <a href="https://wa.me/447403676041" target="_blank" rel="noopener" class="floating-whatsapp" title="Chat on WhatsApp" aria-label="Contact us on WhatsApp">💬</a>
   <button class="back-to-top" id="backToTop" title="Back to top" aria-label="Back to top">⬆</button>
 
   <!-- ══════════════════════════════════════
-       JAVASCRIPT
+       CONFETTI + HOVER SOUND
        ══════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+
   <script>
     (function() {
-      // ═══════════════════════════════════
-      // FAST PROFESSIONAL LOADER
-      // ═══════════════════════════════════
+      // LOADER
       const loader = document.getElementById('loader');
-
       function hideLoader() {
         loader.classList.add('hidden');
-        // Remove loader from DOM after fade
-        setTimeout(() => {
-          if (loader.parentNode) loader.parentNode.removeChild(loader);
-        }, 500);
+        setTimeout(() => { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 500);
+      }
+      if (document.readyState === 'complete') { hideLoader(); }
+      else { window.addEventListener('load', hideLoader); }
+      setTimeout(() => { if (loader && !loader.classList.contains('hidden')) hideLoader(); }, 2000);
+
+      // HOVER WOOF SOUND
+      const hoverSound = new Audio("data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACAf39/f4B/f3+AgH9/f3+AgIB/f3+AgH9/f4CAf39/f4CAf39/gIB/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4B/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4CAf39/gIB/f3+AgH9/f4CAf39/gH9/f4CAf39/gH9/f4CAf39/gH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4B/f3+AgH9/f4=");
+      hoverSound.volume = 0.2;
+      function playWoof() { hoverSound.currentTime = 0; hoverSound.play().catch(() => {}); }
+
+      // VISITOR COUNTER
+      const visitorCountEl = document.getElementById('visitorCount');
+      let visitorCount = parseInt(localStorage.getItem('happyPawsVisitors') || '0');
+      if (!sessionStorage.getItem('happyPawsSession')) {
+        visitorCount++;
+        localStorage.setItem('happyPawsVisitors', visitorCount);
+        sessionStorage.setItem('happyPawsSession', '1');
+      }
+      const randomExtra = Math.floor(Math.random() * 5) + 1;
+      const displayCount = visitorCount + randomExtra;
+      if (visitorCountEl) {
+        visitorCountEl.textContent = displayCount;
+        setInterval(() => {
+          const change = Math.random() > 0.6 ? 1 : -1;
+          const newVal = Math.max(1, displayCount + Math.floor(Math.random() * 3) * change);
+          visitorCountEl.textContent = newVal;
+        }, 8000);
       }
 
-      // Hide as soon as page is ready (not waiting extra time)
-      if (document.readyState === 'complete') {
-        hideLoader();
-      } else {
-        window.addEventListener('load', hideLoader);
-      }
-
-      // Fallback: force hide after 2 seconds max
-      setTimeout(() => {
-        if (loader && !loader.classList.contains('hidden')) {
-          hideLoader();
-        }
-      }, 2000);
-
-      // ═══════════════════════════════════
       // PUPPY DATA
-      // ═══════════════════════════════════
+      const now = new Date();
       const puppies = [
-        {
-          id: 1, name: "Bella", breed: "Golden Retriever", age: "3 months", ageMonths: 3,
-          gender: "Female", fee: "$450",
-          description: "Friendly, playful and great with kids. Loves belly rubs and fetch.",
-          health: "Vaccinated, dewormed, microchipped",
-          personality: "Outgoing, affectionate, eager to please",
-          comesWith: "Starter food pack, blanket, toy, care guide",
-          photo: "https://placehold.co/500x500/f9c79a/5e3e1c?text=Bella"
-        },
-        {
-          id: 2, name: "Max", breed: "German Shepherd", age: "4 months", ageMonths: 4,
-          gender: "Male", fee: "$550",
-          description: "Loyal, smart and protective. Already knows sit, stay, and come.",
-          health: "Fully vaccinated, neutered, microchipped",
-          personality: "Confident, calm, highly trainable",
-          comesWith: "Leash, collar, training guide, toy",
-          photo: "https://placehold.co/500x500/d9a066/3e2c1b?text=Max"
-        },
-        {
-          id: 3, name: "Luna", breed: "Poodle", age: "2.5 months", ageMonths: 2.5,
-          gender: "Female", fee: "$600",
-          description: "Curly, hypoallergenic and loves to cuddle. Perfect for apartments.",
-          health: "Vaccinated, health certificate, microchipped",
-          personality: "Gentle, playful, lap-dog energy",
-          comesWith: "Grooming kit, small bed, toy, food samples",
-          photo: "https://placehold.co/500x500/e6c9a8/4a3724?text=Luna"
-        },
-        {
-          id: 4, name: "Buddy", breed: "Golden Retriever", age: "3.5 months", ageMonths: 3.5,
-          gender: "Male", fee: "$475",
-          description: "Energetic and loving. Great companion for active families.",
-          health: "Vaccinated, dewormed, microchipped",
-          personality: "Playful, loyal, loves water",
-          comesWith: "Food pack, leash, chew toy, blanket",
-          photo: "https://placehold.co/500x500/f0c78e/4a3724?text=Buddy"
-        }
+        { id: 1, name: "Bella", breed: "Golden Retriever", age: "3 months", ageMonths: 3, gender: "Female", fee: "$450", birthDate: new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()), description: "Friendly, playful and great with kids. Loves belly rubs and fetch.", health: "Vaccinated, dewormed, microchipped", personality: "Outgoing, affectionate, eager to please", comesWith: "Starter food pack, blanket, toy, care guide", photo: "https://placehold.co/500x500/f9c79a/5e3e1c?text=Bella" },
+        { id: 2, name: "Max", breed: "German Shepherd", age: "4 months", ageMonths: 4, gender: "Male", fee: "$550", birthDate: new Date(now.getFullYear(), now.getMonth() - 4, now.getDate()), description: "Loyal, smart and protective. Already knows sit, stay, and come.", health: "Fully vaccinated, neutered, microchipped", personality: "Confident, calm, highly trainable", comesWith: "Leash, collar, training guide, toy", photo: "https://placehold.co/500x500/d9a066/3e2c1b?text=Max" },
+        { id: 3, name: "Luna", breed: "Poodle", age: "2.5 months", ageMonths: 2.5, gender: "Female", fee: "$600", birthDate: new Date(now.getFullYear(), now.getMonth() - 2, now.getDate() - 15), description: "Curly, hypoallergenic and loves to cuddle. Perfect for apartments.", health: "Vaccinated, health certificate, microchipped", personality: "Gentle, playful, lap-dog energy", comesWith: "Grooming kit, small bed, toy, food samples", photo: "https://placehold.co/500x500/e6c9a8/4a3724?text=Luna" },
+        { id: 4, name: "Buddy", breed: "Golden Retriever", age: "3.5 months", ageMonths: 3.5, gender: "Male", fee: "$475", birthDate: new Date(now.getFullYear(), now.getMonth() - 3, now.getDate() - 15), description: "Energetic and loving. Great companion for active families.", health: "Vaccinated, dewormed, microchipped", personality: "Playful, loyal, loves water", comesWith: "Food pack, leash, chew toy, blanket", photo: "https://placehold.co/500x500/f0c78e/4a3724?text=Buddy" }
       ];
 
-      // ═══════════════════════════════════
-      // DOM REFERENCES
-      // ═══════════════════════════════════
-      const pages = {
-        home: document.getElementById('homePage'),
-        puppies: document.getElementById('puppiesPage'),
-        detail: document.getElementById('detailPage'),
-        faq: document.getElementById('faqPage'),
-        testimonials: document.getElementById('testimonialsPage'),
-        contact: document.getElementById('contactPage')
-      };
+      function getExactAge(birthDate) {
+        const now = new Date();
+        const diffMs = now - birthDate;
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        if (diffDays < 7) return `${diffDays} days old`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks & ${diffDays % 7} days old`;
+        const months = Math.floor(diffDays / 30.44);
+        const remainingDays = Math.floor(diffDays - (months * 30.44));
+        if (remainingDays > 0) return `${months} months & ${remainingDays} days old`;
+        return `${months} months old`;
+      }
+
+      // DOM REFS
+      const pages = { home: document.getElementById('homePage'), puppies: document.getElementById('puppiesPage'), detail: document.getElementById('detailPage'), faq: document.getElementById('faqPage'), testimonials: document.getElementById('testimonialsPage'), contact: document.getElementById('contactPage') };
       const navButtons = document.querySelectorAll('.nav-btn[data-page]');
       const viewPuppiesBtn = document.getElementById('viewPuppiesBtn');
       const backToPuppiesBtn = document.getElementById('backToPuppiesBtn');
@@ -1156,85 +1238,46 @@
       let scrollTimeout = null;
       let ticking = false;
 
-      // ═══════════════════════════════════
-      // SMART NAVBAR (Fixed - no shaking)
-      // ═══════════════════════════════════
+      // SMART NAVBAR
       window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
-
         if (!ticking) {
           requestAnimationFrame(() => {
-            if (currentScrollY > 80) {
-              navbar.classList.add('scrolled');
-            } else {
-              navbar.classList.remove('scrolled');
-            }
-
+            if (currentScrollY > 80) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
             if (scrollTimeout) clearTimeout(scrollTimeout);
-
             scrollTimeout = setTimeout(() => {
               const nowScrollY = window.scrollY;
-
               if (nowScrollY > 200) {
-                if (nowScrollY > lastScrollY + 30) {
-                  navbarWrapper.classList.add('nav-hidden');
-                } else if (nowScrollY < lastScrollY - 20) {
-                  navbarWrapper.classList.remove('nav-hidden');
-                }
-              } else {
-                navbarWrapper.classList.remove('nav-hidden');
-              }
-
+                if (nowScrollY > lastScrollY + 30) navbarWrapper.classList.add('nav-hidden');
+                else if (nowScrollY < lastScrollY - 20) navbarWrapper.classList.remove('nav-hidden');
+              } else navbarWrapper.classList.remove('nav-hidden');
               lastScrollY = nowScrollY;
             }, 50);
-
-            if (currentScrollY > 500) {
-              backToTop.classList.add('visible');
-            } else {
-              backToTop.classList.remove('visible');
-            }
-
+            if (currentScrollY > 500) backToTop.classList.add('visible');
+            else backToTop.classList.remove('visible');
             ticking = false;
           });
           ticking = true;
         }
       }, { passive: true });
 
-      // ═══════════════════════════════════
-      // BACK TO TOP
-      // ═══════════════════════════════════
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+      backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-      // ═══════════════════════════════════
       // PAGE SWITCHING
-      // ═══════════════════════════════════
       function switchPage(pageId) {
         Object.values(pages).forEach(p => p?.classList.remove('active-page'));
         if (pages[pageId]) pages[pageId].classList.add('active-page');
-
         navButtons.forEach(btn => {
           const page = btn.getAttribute('data-page');
-          if (page === pageId) {
-            btn.classList.add('active');
-            btn.setAttribute('aria-current', 'page');
-          } else {
-            btn.classList.remove('active');
-            btn.removeAttribute('aria-current');
-          }
+          if (page === pageId) { btn.classList.add('active'); btn.setAttribute('aria-current', 'page'); }
+          else { btn.classList.remove('active'); btn.removeAttribute('aria-current'); }
         });
-
-        if (pageId === 'puppies') {
-          resetFilters();
-          renderPuppyGrid();
-        }
+        if (pageId === 'puppies') { resetFilters(); renderPuppyGrid(); }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // ═══════════════════════════════════
       // FILTERS
-      // ═══════════════════════════════════
       function getFilteredPuppies() {
         return puppies.filter(pup => {
           if (currentFilters.breed && pup.breed !== currentFilters.breed) return false;
@@ -1245,13 +1288,10 @@
             if (threshold === 3 && (pup.ageMonths < 3 || pup.ageMonths >= 4)) return false;
             if (threshold === 4 && pup.ageMonths < 4) return false;
           }
-          if (currentFilters.search &&
-            !pup.name.toLowerCase().includes(currentFilters.search.toLowerCase()) &&
-            !pup.breed.toLowerCase().includes(currentFilters.search.toLowerCase())) return false;
+          if (currentFilters.search && !pup.name.toLowerCase().includes(currentFilters.search.toLowerCase()) && !pup.breed.toLowerCase().includes(currentFilters.search.toLowerCase())) return false;
           return true;
         });
       }
-
       function applyFilters() {
         currentFilters.breed = filterBreed?.value || '';
         currentFilters.gender = filterGender?.value || '';
@@ -1259,7 +1299,6 @@
         currentFilters.search = filterSearch?.value || '';
         renderPuppyGrid();
       }
-
       function resetFilters() {
         if (filterBreed) filterBreed.value = '';
         if (filterGender) filterGender.value = '';
@@ -1268,16 +1307,13 @@
         currentFilters = { breed: '', gender: '', age: '', search: '' };
         renderPuppyGrid();
       }
-
       if (filterBreed) filterBreed.addEventListener('change', applyFilters);
       if (filterGender) filterGender.addEventListener('change', applyFilters);
       if (filterAge) filterAge.addEventListener('change', applyFilters);
       if (filterSearch) filterSearch.addEventListener('input', applyFilters);
       if (filterReset) filterReset.addEventListener('click', resetFilters);
 
-      // ═══════════════════════════════════
       // RENDER PUPPY GRID
-      // ═══════════════════════════════════
       function renderPuppyGrid() {
         if (!puppyGrid) return;
         const filtered = getFilteredPuppies();
@@ -1285,116 +1321,66 @@
           puppyGrid.innerHTML = `<div class="no-results">🐾 No puppies match. <button class="filter-reset" style="margin-top:1rem;" onclick="document.getElementById('filterReset').click()">Reset</button></div>`;
           return;
         }
-        puppyGrid.innerHTML = filtered.map(pup => `
-          <div class="puppy-card" data-puppy-id="${pup.id}" tabindex="0" role="button" aria-label="View ${pup.name}">
-            <div class="img-container">
-              <img src="${pup.photo}" alt="${pup.name}" loading="lazy" onerror="this.style.background='#fadcc5'; this.outerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;\\'>🐾</div>'">
-            </div>
-            <div class="puppy-info">
-              <h3>${pup.name}</h3>
-              <span class="badge">${pup.breed}</span>
-              <p>🐾 ${pup.age} · ${pup.gender}</p>
-              <p><strong>${pup.fee}</strong></p>
-              <small>${pup.description}</small>
-            </div>
-          </div>
-        `).join('');
-
+        puppyGrid.innerHTML = filtered.map(pup => {
+          const viewers = Math.floor(Math.random() * 8) + 2;
+          const exactAge = getExactAge(pup.birthDate);
+          return `<div class="puppy-card" data-puppy-id="${pup.id}" tabindex="0" role="button" aria-label="View ${pup.name}"><div class="viewers-badge">👀 ${viewers} viewing</div><div class="img-container"><img src="${pup.photo}" alt="${pup.name}" loading="lazy" onerror="this.style.background='#fadcc5'; this.outerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;\\'>🐾</div>'"></div><div class="puppy-info"><h3>${pup.name}</h3><span class="badge">${pup.breed}</span><p>🐾 ${pup.age} · ${pup.gender}</p><p class="age-counter">🎂 ${exactAge}</p><p><strong>${pup.fee}</strong></p><small>${pup.description}</small></div></div>`;
+        }).join('');
         document.querySelectorAll('.puppy-card').forEach(card => {
+          card.addEventListener('mouseenter', playWoof);
           card.addEventListener('click', () => showPuppyDetail(card.getAttribute('data-puppy-id')));
-          card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              showPuppyDetail(card.getAttribute('data-puppy-id'));
-            }
-          });
+          card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPuppyDetail(card.getAttribute('data-puppy-id')); } });
         });
       }
 
-      // ═══════════════════════════════════
       // SHOW PUPPY DETAIL
-      // ═══════════════════════════════════
       function showPuppyDetail(puppyId) {
         const pup = puppies.find(p => p.id == puppyId);
         if (!pup) return;
         switchPage('detail');
+        const detailViewers = Math.floor(Math.random() * 15) + 5;
+        const exactAge = getExactAge(pup.birthDate);
         if (detailContent) {
-          detailContent.innerHTML = `
-            <img src="${pup.photo}" alt="${pup.name}" class="detail-photo" onerror="this.style.background='#fbe7d4'; this.outerHTML='<div style=\\'width:100%;max-width:400px;aspect-ratio:1/1;border-radius:2.5rem;background:#fbe7d4;display:flex;align-items:center;justify-content:center;font-size:6rem;border:3px solid white;\\'>🐾</div>'">
-            <div class="detail-content">
-              <h2 style="font-size:2.5rem; color:#4b2e1a;">${pup.name}</h2>
-              <p><strong>${pup.breed}</strong> · ${pup.age} · ${pup.gender}</p>
-              <p style="font-size:1.8rem; font-weight:700; color:#b45f3a;">${pup.fee}</p>
-              <p>✨ ${pup.description}</p>
-              <hr style="margin:1rem 0; border-color:#f0dcc8;">
-              <p>🩺 <strong>Health:</strong> ${pup.health}</p>
-              <p>🧸 <strong>Personality:</strong> ${pup.personality}</p>
-              <p>🎁 <strong>Comes with:</strong> ${pup.comesWith}</p>
-              <a href="https://wa.me/2330508437839?text=Hi%20I'm%20interested%20in%20${encodeURIComponent(pup.name)}%20the%20${encodeURIComponent(pup.breed)}" target="_blank" rel="noopener" class="whatsapp-btn">💬 WhatsApp about ${pup.name}</a>
-              <p><a href="tel:+2330508437839" style="color:#5e3e1c; min-height:44px; display:inline-block;">📞 Call: +233 50 843 7839</a></p>
-            </div>
-          `;
+          detailContent.innerHTML = `<img src="${pup.photo}" alt="${pup.name}" class="detail-photo" onerror="this.style.background='#fbe7d4'; this.outerHTML='<div style=\\'width:100%;max-width:400px;aspect-ratio:1/1;border-radius:2.5rem;background:#fbe7d4;display:flex;align-items:center;justify-content:center;font-size:6rem;border:3px solid white;\\'>🐾</div>'"><div class="detail-content"><div class="detail-viewers"><span class="pulse-dot"></span> ${detailViewers} people viewing this puppy now</div><h2 style="font-size:2.5rem; color:#4b2e1a;">${pup.name}</h2><p><strong>${pup.breed}</strong> · ${pup.age} · ${pup.gender}</p><p style="color:#8b6f5a; font-style:italic;">🎂 ${exactAge}</p><p style="font-size:1.8rem; font-weight:700; color:#b45f3a;">${pup.fee}</p><p>✨ ${pup.description}</p><hr style="margin:1rem 0; border-color:#f0dcc8;"><p>🩺 <strong>Health:</strong> ${pup.health}</p><p>🧸 <strong>Personality:</strong> ${pup.personality}</p><p>🎁 <strong>Comes with:</strong> ${pup.comesWith}</p><a href="https://wa.me/447403676041?text=Hi%20I'm%20interested%20in%20${encodeURIComponent(pup.name)}%20the%20${encodeURIComponent(pup.breed)}" target="_blank" rel="noopener" class="whatsapp-btn">💬 WhatsApp about ${pup.name}</a><p><a href="tel:+447403676041" style="color:#5e3e1c; min-height:44px; display:inline-block;">📞 Call: +(44) 740 367 6041</a></p></div>`;
         }
       }
 
-      // ═══════════════════════════════════
       // FAQ ACCORDION
-      // ═══════════════════════════════════
       document.querySelectorAll('.faq-question').forEach(q => {
         q.addEventListener('click', () => {
           const item = q.parentElement;
           const wasOpen = item.classList.contains('open');
-          document.querySelectorAll('.faq-item.open').forEach(i => {
-            i.classList.remove('open');
-            i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-          });
-          if (!wasOpen) {
-            item.classList.add('open');
-            q.setAttribute('aria-expanded', 'true');
-          }
+          document.querySelectorAll('.faq-item.open').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-question').setAttribute('aria-expanded', 'false'); });
+          if (!wasOpen) { item.classList.add('open'); q.setAttribute('aria-expanded', 'true'); }
         });
-        q.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); }
-        });
+        q.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); } });
       });
 
-      // ═══════════════════════════════════
-      // FORMSPREE FORM
-      // ═══════════════════════════════════
+      // FORMSPREE + CONFETTI
       if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-
           const submitBtn = contactForm.querySelector('button[type="submit"]');
           const originalText = submitBtn.textContent;
           submitBtn.textContent = '⏳ Sending...';
           submitBtn.disabled = true;
           showFormStatus('loading', '⏳ Sending your message...');
-
           try {
             const formData = new FormData(contactForm);
-            const response = await fetch(contactForm.action, {
-              method: 'POST',
-              body: formData,
-              headers: { 'Accept': 'application/json' }
-            });
-
+            const response = await fetch(contactForm.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
             if (response.ok) {
               showFormStatus('success', '✅ Message sent! We\'ll contact you soon.');
+              confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#f7b05e', '#ff8c75', '#a7d0c0', '#f9d5d3', '#25D366', '#f3b33d'] });
+              setTimeout(() => { confetti({ particleCount: 80, spread: 100, origin: { y: 0.5, x: 0.3 }, colors: ['#f7b05e', '#ff8c75', '#a7d0c0'] }); }, 300);
+              setTimeout(() => { confetti({ particleCount: 80, spread: 100, origin: { y: 0.5, x: 0.7 }, colors: ['#f9d5d3', '#25D366', '#f3b33d'] }); }, 600);
               contactForm.reset();
-            } else {
-              throw new Error('Form submission failed');
-            }
+            } else throw new Error('Form submission failed');
           } catch (err) {
-            showFormStatus('error', '❌ Oops! Try again or call +233 50 843 7839');
+            showFormStatus('error', '❌ Oops! Try again or call +(44) 740 367 6041');
           }
-
           submitBtn.textContent = originalText;
           submitBtn.disabled = false;
-
-          setTimeout(() => {
-            if (formStatus) formStatus.style.display = 'none';
-          }, 6000);
+          setTimeout(() => { if (formStatus) formStatus.style.display = 'none'; }, 6000);
         });
       }
 
@@ -1405,27 +1391,17 @@
         formStatus.style.display = 'block';
       }
 
-      // ═══════════════════════════════════
       // NAVIGATION
-      // ═══════════════════════════════════
-      navButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const page = btn.getAttribute('data-page');
-          if (page) switchPage(page);
-        });
-      });
-
+      navButtons.forEach(btn => { btn.addEventListener('click', () => { const page = btn.getAttribute('data-page'); if (page) switchPage(page); }); });
       if (viewPuppiesBtn) viewPuppiesBtn.addEventListener('click', () => switchPage('puppies'));
       if (backToPuppiesBtn) backToPuppiesBtn.addEventListener('click', () => switchPage('puppies'));
 
-      // ═══════════════════════════════════
       // INIT
-      // ═══════════════════════════════════
       renderPuppyGrid();
       switchPage('home');
-
       console.log('🐾 Happy Paws ready!');
-      console.log('📱 +233 50 843 7839');
+      console.log('📱 +(44) 740 367 6041');
+      console.log('📧 patricktiwa76@gmail.com');
     })();
   </script>
 </body>
